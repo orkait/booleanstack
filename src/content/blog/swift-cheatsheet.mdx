@@ -1,0 +1,47 @@
+---
+title: "Swift Cheatsheet"
+description: "A quick reference guide for the Swift programming language covering the primary types, including Number, String, and Bool, and advanced data structures like Set, Array and Dictionary"
+date: "2023-12-29"
+tags: ["swift", "cheatsheet"]
+cover: "https://images.unsplash.com/photo-1580196969807-cc6de06c05be"
+---
+
+### Comment
+
+```swift
+// This is a single-line comment
+
+/*
+This is a
+multi-line comment
+*/
+```
+
+### Type Alias
+
+```swift
+typealias Integer = Int
+let myInteger: Integer = 0
+```
+
+### Variable, Constant, Type
+
+```swift
+// Declare a constant
+let pi = 3.14159
+
+// Declare a variable
+var radius = 5.0
+
+// Define a custom type
+struct Circle {
+    var radius: Double
+    var area: Double {
+        return pi * radius * radius
+    }
+}
+
+// Convert between types
+let diameter = Int(radius * 2)
+let circle = Circle(radius: radius)
+```
