@@ -1,41 +1,30 @@
-import React from 'react';
+import React, { useState } from "react";
 
-// Function to split the content based on <pre> tags
-const splitContent = (content: string) => {
-    const regex = /(<pre[^>]*>.*?<\/pre>)/gs; // Regex to match <pre> blocks
-    const codeBlocks: string[] = [];
-    const otherContent: string[] = [];
+const CodeTabs = ({ tabs }) => {
+    const [activeTab, setActiveTab] = useState(Object.keys(tabs)[0]); // Default to the first language tab
 
-    let lastIndex = 0;
-
-    // Find all <pre> tags and split the content
-    content.match(regex)?.forEach((match, offset) => {
-        // Add content before the <pre> block as 'other content'
-        if (lastIndex < offset) {
-            otherContent.push(content.slice(lastIndex, offset));
-        }
-        // Add the <pre> block as a code block
-        codeBlocks.push(match);
-        lastIndex = offset + match.length;
-    });
-
-    // Add any remaining 'other content' after the last <pre> tag
-    if (lastIndex < content.length) {
-        otherContent.push(content.slice(lastIndex));
-    }
-
-    return { codeBlocks, otherContent };
-};
-
-interface CodeTabsProps {
-    children: React.ReactNode;
-}
-
-const CodeTabs: React.FC<CodeTabsProps> = ({ children }) => {
     return (
-        <>
-            {children}
-        </>
+        <div>
+            {/* Tab Navigation */}
+            <div className="tabs">
+                {Object.keys(tabs).map((lang) => (
+                    <button
+                        key={lang}
+                        className={`tab ${activeTab === lang ? "active" : ""}`}
+                        onClick={() => setActiveTab(lang)}
+                    >
+                        {lang.toUpperCase()}
+                    </button>
+                ))}
+            </div>
+
+            {/* Code Block */}
+            <div className="code-block">
+                <pre>
+                    <code className={`language-${activeTab}`}>{tabs[activeTab]}</code>
+                </pre>
+            </div>
+        </div>
     );
 };
 

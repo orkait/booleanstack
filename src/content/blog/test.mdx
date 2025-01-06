@@ -1,0 +1,22 @@
+---
+tabs1:
+  javascript: "console.log('Hello, JavaScript!');"
+  python: "print('Hello, Python!')"
+  typescript: "console.log('Hello, TypeScript!');"
+
+tabs2:
+  javascript: "console.log('Hello, JavaScript! 2');"
+  python: "print('Hello, Python! 2')"
+  typescript: "console.log('Hello, TypeScript! 2');"
+
+title: "Code Tabs Example"
+description: "An example of using CodeTabs with React in Astro."
+date: 2025-01-06
+---
+
+import CodeTabs from "../../components/code-block.astro";
+
+# Code Snippets in Tabs
+
+<CodeTabs tabs={frontmatter.tabs1} />
+<CodeTabs tabs={frontmatter.tabs2} />

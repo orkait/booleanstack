@@ -97,3 +97,26 @@ button {
 button:hover {
   background-color: var(--secondary);
 }
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.tab {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #f3f3f3;
+  border-radius: 0.25rem;
+}
+.tab.active {
+  background-color: #0070f3;
+  color: white;
+}
+.code-block {
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  overflow: auto;
+}
