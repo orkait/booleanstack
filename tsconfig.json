@@ -1,20 +1,15 @@
 {
-  "extends": "astro/tsconfigs/base",
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "jsx": "preserve",
-    "jsxImportSource": "react",
-    "verbatimModuleSyntax": true,
-    "paths": {
-      "src": [
-        "./src"
-      ]
-    }
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "dist"
-  ]
+	"extends": "astro/tsconfigs/base",
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"jsx": "preserve",
+		"jsxImportSource": "react",
+		"verbatimModuleSyntax": true,
+		"paths": {
+			"src": ["./src"],
+            "@components/*": ["./src/components/*"],
+		}
+	},
+	"include": ["src"],
+	"exclude": ["dist"]
 }

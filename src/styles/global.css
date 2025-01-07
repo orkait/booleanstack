@@ -6,6 +6,11 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
 *:focus-visible {
 	outline: none;
 }
@@ -118,4 +123,29 @@ button {
 
 .code-tab-active {
 	@apply bg-primary text-primary-content;
+}
+
+.prose img {
+    @apply mt-0 mb-0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+	@apply mt-1 mb-1;
+}
+
+.prose p {
+	@apply mt-1 mb-1;
+}
+
+.prose ul {
+	@apply mt-1 mb-1;
+}
+
+.prose ol {
+	@apply mt-1 mb-1;
 }

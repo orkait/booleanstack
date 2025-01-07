@@ -27,6 +27,6 @@ export const MENUS = [
   },
 ];
 
-export const FOOTER_CONTENT = "Let's build a 1B unicorn 🦄";
+export const FOOTER_CONTENT = "Made by Humans for Superhumans 🚀";
 
 export const GOOGLE_GTAG = "G-XXXXXXXXXX";

@@ -1,24 +1,28 @@
 ---
+cover: "https://i.ytimg.com/vi/Wh3A29psE_Y/maxresdefault.jpg"
 tabs:
     javascript: "console.log('Top K Frequent Elements');"
     python: "print('Top K Frequent Elements')"
 title: "347. Top K Frequent Elements"
 description: "Find the k most frequent elements in an array using heaps and hash maps."
-date: 2025-01-06
+date: "2023-12-29"
+tags: ["swift", "cheatsheet"]
 ---
 
 import CodeTabs from "../../components/code-tabs.astro";
+import { injectCode } from "../../utils/blog-utils";
 import { Code } from "astro:components";
 import React from "react";
-import { injectCode } from "../../utils/blog-utils";
-
-# 347. Top K Frequent Elements
 
 Imagine you're analyzing data from a music streaming service. You want to find the top 3 most played songs from a playlist. That's exactly what this problem helps us solve - finding the k most frequent elements in a list!
 
 ## Problem Statement
 
-Given an array of numbers and an integer k, return the k most frequent elements. You can return the answer in any order.
+<Notation type="box" color="blue">
+	Given an array of numbers and an integer k, return the k most frequent elements. You can return the
+	answer in any order.
+</Notation>
+
 
 Example:
 
@@ -54,7 +58,7 @@ Let's solve this step by step using a hash map and heap:
                 return [num for freq, num in heap]
         `),
 
-        cpp:injectCode(`
+        cpp:    injectCode(`
             class Solution {
                 public:
                     vector<int> topKFrequent(vector<int>& nums, int k) {
@@ -78,35 +82,35 @@ Let's solve this step by step using a hash map and heap:
                 };
         `),
 
-    java: injectCode(`
-        import java.util.HashMap;
-        import java.util.Map;
-        import java.util.PriorityQueue;
+        java:   injectCode(`
+            import java.util.HashMap;
+            import java.util.Map;
+            import java.util.PriorityQueue;
 
-        class Solution {
-            public int[] topKFrequent(int[] nums, int k) {
-                Map<Integer, Integer> count = new HashMap<>();
-                for (int num : nums) {
-                    count.put(num, count.getOrDefault(num, 0) + 1);
-                }
+            class Solution {
+                public int[] topKFrequent(int[] nums, int k) {
+                    Map<Integer, Integer> count = new HashMap<>();
+                    for (int num : nums) {
+                        count.put(num, count.getOrDefault(num, 0) + 1);
+                    }
 
-                PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
-                for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
-                    pq.offer(new int[] {
-                            entry.getKey(), entry.getValue()
-                    });
-                }
+                    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+                    for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+                        pq.offer(new int[] {
+                                entry.getKey(), entry.getValue()
+                        });
+                    }
 
-                int[] result = new int[k];
-                for (int i = 0; i < k; i++) {
-                    result[i] = pq.poll()[0];
+                    int[] result = new int[k];
+                    for (int i = 0; i < k; i++) {
+                        result[i] = pq.poll()[0];
+                    }
+                    return result;
                 }
-                return result;
             }
-        }
-    `),
+        `),
+    }}
 
-}}
 />
 
 ## Dry Run Example
