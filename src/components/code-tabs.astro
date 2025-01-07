@@ -21,7 +21,7 @@ import { Code } from "astro:components";
       Object.entries(tabs).map(([lang, code], index) => (
         <div class={index === 0 ? 'code-block tab-active' : 'code-block hidden'} data-lang={lang}>
           <Code
-          lang={lang} code={code} class="overflow-hidden" />
+          lang={lang as any} code={code as any} class="overflow-hidden" />
         </div>
       ))
     }
