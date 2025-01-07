@@ -3,12 +3,12 @@ const { tabs } = Astro.props;
 import { Code } from "astro:components";
 ---
 
-<div class="code-tabs">
+<div class="code-tabs  ">
   <!-- Tab Buttons -->
   <div role="tablist" class="tabs tabs-boxed">
     {
-      Object.keys(tabs).map((lang) => (
-        <div role="tab" class="tab" data-lang={lang}>
+      Object.keys(tabs).map((lang, index) => (
+        <div role="tab" class={index === 0 ? 'tab tab-active' : 'tab'} data-lang={lang}>
           {lang}
         </div>
       ))
@@ -16,11 +16,12 @@ import { Code } from "astro:components";
   </div>
 
   <!-- Code Snippets -->
-  <div class="code-display">
+  <div class="code-display  ">
     {
       Object.entries(tabs).map(([lang, code], index) => (
         <div class={index === 0 ? 'code-block tab-active' : 'code-block hidden'} data-lang={lang}>
-          <Code lang={lang} code={code} />
+          <Code
+          lang={lang} code={code} class="overflow-hidden" />
         </div>
       ))
     }
@@ -66,6 +67,6 @@ import { Code } from "astro:components";
 
 <style>
   .code-display {
-    @apply p-4 bg-base-200;
+    /* @apply p-4 bg-base-200; */
   }
 </style>

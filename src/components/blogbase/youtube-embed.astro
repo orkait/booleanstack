@@ -1,0 +1,8 @@
+---
+import { YouTube } from 'astro-embed';
+const { url } = Astro.props;
+---
+
+<div class="bg-red-500 p-2">
+    <YouTube id={url} />
+</div>
