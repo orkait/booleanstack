@@ -1,0 +1,71 @@
+---
+const { tabs } = Astro.props;
+import { Code } from "astro:components";
+---
+
+<div class="code-tabs">
+  <!-- Tab Buttons -->
+  <div role="tablist" class="tabs tabs-boxed">
+    {
+      Object.keys(tabs).map((lang) => (
+        <div role="tab" class="tab" data-lang={lang}>
+          {lang}
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Code Snippets -->
+  <div class="code-display">
+    {
+      Object.entries(tabs).map(([lang, code]) => (
+        <div class="code-block hidden" data-lang={lang}>
+          <Code lang={lang} code={code} />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script is:inline>
+  // Handle tab switching
+  document.addEventListener("DOMContentLoaded", () => {
+    const tabButtons = document.querySelectorAll(".tab");
+    const codeBlocks = document.querySelectorAll(".code-block");
+
+    function activateTab(lang) {
+      // Remove active class from all buttons first
+      tabButtons.forEach((btn) => {
+        btn.classList.remove("tab-active");
+      });
+
+      // Add active class to the clicked button
+      const activeButton = document.querySelector(`.tab[data-lang="${lang}"]`);
+      if (activeButton) {
+        activeButton.classList.add("tab-active");
+      }
+
+      // Show/hide code blocks
+      codeBlocks.forEach((block) => {
+        block.classList.toggle("hidden", block.dataset.lang !== lang);
+      });
+    }
+
+    // Set initial active tab
+    const defaultLang = tabButtons[0]?.dataset.lang;
+    if (defaultLang) {
+      activateTab(defaultLang);
+    }
+
+    // Add click event listeners to each tab button
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => activateTab(btn.dataset.lang));
+    });
+  });
+</script>
+
+<style>
+  .code-display {
+    @apply p-4 bg-base-200;
+  }
+</style>
