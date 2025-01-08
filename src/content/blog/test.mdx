@@ -38,7 +38,7 @@ Let's solve this step by step using a hash map and heap:
 1. Count how many times each number appears
 2. Use a min-heap to keep track of the k most frequent elements
 
-<CodeTabs 
+<CodeTabs
     tabs={{
         python:  injectCode(`
             from collections import Counter
@@ -58,7 +58,7 @@ Let's solve this step by step using a hash map and heap:
                 return [num for freq, num in heap]
         `),
 
-        cpp:    injectCode(`
+        'c++':    injectCode(`
             class Solution {
                 public:
                     vector<int> topKFrequent(vector<int>& nums, int k) {
