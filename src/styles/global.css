@@ -32,23 +32,6 @@ body::-webkit-scrollbar-thumb {
 	}
 }
 
-* {
-	margin: 0;
-	padding: 0;
-}
-
-*:focus-visible {
-	outline: none;
-}
-
-code {
-	@apply text-sm font-mono text-purple-700 dark:text-purple-500 font-medium;
-}
-
-pre.astro-code {
-	@apply px-4 py-3 rounded-lg  leading-6;
-}
-
 svg.rough-annotation {
 	opacity: 70%;
 }
