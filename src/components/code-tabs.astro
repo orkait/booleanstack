@@ -16,15 +16,15 @@ import { Code } from "astro:components";
   </div>
 
   <!-- Code Snippets -->
-  <div class="code-display  ">
+  <div class="code-display">
     {
       Object.entries(tabs).map(([lang, code], index) => (
         <div class={index === 0 ? 'code-block tab-active' : 'code-block hidden'} data-lang={lang}>
           <Code
-            theme="dracula"
             lang={lang as any} 
             code={code as any} 
-            class="overflow-hidden" 
+            class="overflow-hidden"
+            theme="houston"
           />
         </div>
       ))

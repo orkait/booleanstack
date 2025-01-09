@@ -1,0 +1,71 @@
+/* Headings */
+h1 {
+	@apply text-4xl font-bold mt-8 mb-4;
+}
+
+h2 {
+	@apply text-3xl font-bold mt-6 mb-3;
+}
+
+h3 {
+	@apply text-2xl font-semibold mt-5 mb-2;
+}
+
+h4 {
+	@apply text-xl font-semibold mt-4 mb-2;
+}
+
+h5 {
+	@apply text-lg font-medium mt-3 mb-1;
+}
+
+h6 {
+	@apply text-base font-medium mt-3 mb-1;
+}
+
+/* Paragraphs */
+p {
+	@apply text-base my-2 leading-relaxed;
+}
+
+/* Lists */
+ul {
+	@apply list-disc pl-6 mt-3 mb-3 leading-snug;
+}
+
+ol {
+	@apply list-decimal pl-6 mt-3 mb-3 leading-snug;
+}
+
+li {
+	@apply mb-2;
+}
+
+/* Code Blocks */
+pre {
+	@apply bg-base-200 text-base-content rounded-md p-2 overflow-x-auto border-2;
+}
+
+pre code {
+	@apply font-mono text-sm text-base-content;
+}
+
+/* Horizontal Rule */
+hr {
+	@apply border-t border-base-300 my-6;
+}
+
+/* Images */
+img {
+	@apply rounded-md shadow-md mt-4 mb-4;
+}
+
+:not(pre) > code {
+	@apply bg-base-200 text-base-content rounded-md p-1
+    
+    border-base-300  dark:border-neutral-700;
+}
+
+.code-display > * > pre {
+    @apply border-none;
+}
