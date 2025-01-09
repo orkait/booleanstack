@@ -31,7 +31,7 @@ import Tr from "../mdx/tr.astro";
 import Ul from "../mdx/ul.astro";
 
 type Props = {
-  post: CollectionEntry<"blog">;
+	post: CollectionEntry<"blog">;
 };
 
 const { post } = Astro.props;
@@ -39,35 +39,35 @@ const { Content } = await post.render();
 ---
 
 <Content
-  components={{
-    h1: H1,
-    h2: H2,
-    h3: H3,
-    h4: H4,
-    h5: H5,
-    h6: H6,
-    p: P,
-    a: A,
-    blockquote: Blockquote,
-    img: Img,
-    ul: Ul,
-    ol: Ol,
-    li: Li,
-    input: Input,
-    table: Table,
-    tr: Tr,
-    th: Th,
-    td: Td,
-    strong: Strong,
-    em: Em,
-    i: I,
-    del: Del,
-    hr: Hr,
-    br: Br,
-    // Custom Components
-    Box,
-    Notation,
-    N: Notation,
-    Tweet,
-  }}
+	components={{
+		h1: H1,
+		h2: H2,
+		h3: H3,
+		h4: H4,
+		h5: H5,
+		h6: H6,
+		p: P,
+		a: A,
+		blockquote: Blockquote,
+		img: Img,
+		ul: Ul,
+		ol: Ol,
+		li: Li,
+		input: Input,
+		table: Table,
+		tr: Tr,
+		th: Th,
+		td: Td,
+		strong: Strong,
+		em: Em,
+		i: I,
+		del: Del,
+		hr: Hr,
+		br: Br,
+		// Custom Components
+		Box,
+		Notation,
+		N: Notation,
+		Tweet,
+	}}
 />

@@ -5,25 +5,28 @@ import Header from "./header.astro";
 import Meta from "./meta.astro";
 
 type Props = {
-  title?: string;
-  description?: string;
+	title?: string;
+	description?: string;
 };
 
 const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" >
-  <head>
-    <Meta title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE} description={description ?? SITE_DESCRIPTION} />
-  </head>
-  <body class="light">
-    <div class="flex flex-col h-full mb-8 overflow-y-scroll antialiased">
-      <Header />
-      <div class="flex-auto prose max-w-none ">
-        <slot />
-      </div>
-      <Footer />
-    </div>
-  </body>
+<html lang="en">
+	<head>
+		<Meta
+			title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE}
+			description={description ?? SITE_DESCRIPTION}
+		/>
+	</head>
+	<body class="light">
+		<div class="flex flex-col h-full mb-8 overflow-y-scroll antialiased">
+			<Header />
+			<div class="flex-auto prose max-w-none">
+				<slot />
+			</div>
+			<Footer />
+		</div>
+	</body>
 </html>
