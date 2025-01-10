@@ -1,15 +1,10 @@
 ---
-import { MENUS } from "../config";
 import ThemeIcon from "./theme-icon.astro";
 ---
 
-<div class="flex flex-row gap-4 items-center ">
-	{
-		MENUS.map((item) => (
-			<a href={item.link} target={item.target} class="h-full text-sm hover:text-orange-700">
-				{item.title}
-			</a>
-		))
-	}
+<div class="flex flex-row gap-4 items-center">
+	<a href="/posts" target="_self" class="h-full text-sm hover:text-orange-700"> Posts </a>
+	<a href="/dsa" target="_self" class="h-full text-sm hover:text-orange-700"> Cheat Sheets </a>
+	<a href="/dsa" target="_self" class="h-full text-sm hover:text-orange-700"> Cheat Sheets </a>
 	<ThemeIcon />
 </div>
