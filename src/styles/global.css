@@ -132,7 +132,7 @@ button {
 }
 
 .prose :where(code):not(:where([class~="not-prose"] *, pre *)) {
-	@apply rounded-sm p-1 font-light; 
+	@apply rounded-md px-2 p-1 font-light; 
 }
 
 .prose ol > li > p {
