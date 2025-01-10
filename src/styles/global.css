@@ -130,3 +130,11 @@ button {
 	border: none;
 	outline: none;
 }
+
+.prose :where(code):not(:where([class~="not-prose"] *, pre *)) {
+	@apply rounded-sm p-1 font-light; 
+}
+
+.prose ol > li > p {
+    @apply font-semibold;
+}
