@@ -143,9 +143,5 @@ button {
 }
 
 .code-tabs {
-	@apply p-2 rounded-lg;
-}
-
-.tabs-boxed:first-child {
-	@apply pl-0;
+	@apply p-0 rounded-lg;
 }
