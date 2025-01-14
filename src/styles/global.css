@@ -36,34 +36,6 @@ svg.rough-annotation {
 	opacity: 70%;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	color: var(--heading-color);
-	margin: 0 0 1rem 0;
-	font-weight: bold;
-}
-
-/* Lists */
-ul,
-ol {
-	color: var(--text-color);
-	margin: 1rem 0;
-	padding-left: 2rem;
-}
-
-li {
-	margin-bottom: 0.5rem;
-}
-
-button {
-	background-color: var(--primary);
-	color: var(--neutral-content);
-}
-
 .code-tabs {
 	border: 1px solid #ddd;
 	border-radius: 6px;
@@ -88,34 +60,6 @@ button {
 
 .code-tab-active {
 	@apply bg-primary text-primary-content;
-}
-
-.prose img {
-	@apply mt-0 mb-0;
-}
-
-.prose p {
-	@apply mt-1 mb-1;
-}
-
-.prose ul {
-	@apply mt-1 mb-1;
-}
-
-.prose li {
-	@apply my-1.5;
-}
-
-.prose ol {
-	@apply mt-1 mb-1;
-}
-
-.prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-	@apply mb-1 mt-1;
-}
-
-.prose h2 {
-	@apply mt-6 mb-1;
 }
 
 #themeToggle {

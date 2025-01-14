@@ -25,7 +25,7 @@ export default defineConfig({
 		mdx({
 			syntaxHighlight: "shiki",
 			shikiConfig: {
-				theme: "dracula",
+				theme: "houston",
 				langs: ["cpp", "java", "python"],
 			},
 			remarkPlugins: [remarkMath],

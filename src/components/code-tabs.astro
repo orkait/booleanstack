@@ -37,8 +37,8 @@ import { Code } from "astro:components";
 <script is:inline>
 	(() => {
 		// Handle tab switching
-		const tabButtons = document.querySelectorAll(".tab");
-		const codeBlocks = document.querySelectorAll(".code-block");
+		var tabButtons = document.querySelectorAll(".tab");
+		var codeBlocks = document.querySelectorAll(".code-block");
 
 		function activateTab(lang) {
 			// Remove active class from all buttons first
