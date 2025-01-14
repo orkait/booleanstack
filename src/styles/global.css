@@ -44,7 +44,6 @@ svg.rough-annotation {
 
 .tabs {
 	display: flex;
-	border-bottom: 1px solid #ddd;
 }
 
 .tab-button {
@@ -73,4 +72,20 @@ svg.rough-annotation {
 	background: transparent;
 	border: none;
 	outline: none;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *, pre *)) {
+	@apply rounded-md px-2 p-1 font-light;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply m-0 border-0;
+}
+
+.prose ol > li > p {
+	@apply font-semibold;
+}
+
+.code-tabs {
+	@apply p-0 rounded-lg;
 }
