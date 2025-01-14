@@ -1,0 +1,369 @@
+<div
+	class="pq-banner-m-container js-home-pq-banner js-impression-tracking-pq_banner es-pqbanner-container"
+>
+	<a
+		href="https://ev.tatamotors.com/curvv/ev.html?utm_source=Carwale_Curvvev_Launch_ROS&utm_medium=cpm&utm_campaign=Carwale_Curvvev_Launch_ROS&utm_content=banner"
+		title="Book Now"
+		target="_blank"
+		rel="nofollow noopener"
+		data-cta="Book Now"
+		class="banner-cta-container-1 js-click-tracking-pq_banner"
+	>
+	</a>
+	<img
+		style="width: 1px; height: 1px"
+		src="https://servedby.flashtalking.com/imp/7/246979;8587922;201;pixel;CarwaleIN;TATAevTamorLaunchEvaluationBrandCarWaale970X90/?ft_creative=4648715&gdpr=${GDPR}&gdpr_consent=${GDPR_CONSENT_78}&us_privacy=${US_PRIVACY}&cachebuster=[CACHEBUSTER]"
+	/>
+	<div class="video-container">
+		<div class="youtube-player-wrapper">
+			<div id="YouTubeVideoPlayer"></div>
+			<div class="video-volume-control"></div>
+		</div>
+		<!-- <div class="youtube-overlay"></div> -->
+	</div>
+</div>
+<style>
+	/* video player styles */
+	.search--container .welcome-box-container {
+		z-index: 1;
+	}
+
+	.pq-banner-m-container {
+		height: 230px;
+		position: relative;
+		width: 320px;
+		margin: 0 auto;
+	}
+
+	/* campaign styles */
+	.es-pqbanner-container {
+		background-image: url(https://imgd.aeplcdn.com/0x0/media/cw/t2edieb_1764125.jpg);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		height: 450px;
+		margin-top: 36px;
+		margin-bottom: 7px;
+		width: 100%;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-direction: column;
+		flex-direction: column;
+		-webkit-justify-content: space-between;
+		justify-content: space-between;
+	}
+
+	.banner-cta-container-1 {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 84px;
+		width: 100%;
+	}
+
+	.video-volume-control {
+		width: 34px;
+		height: 34px;
+		position: absolute;
+		bottom: 16px;
+		left: 16px;
+		background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/mute.png?19Aug2019659")
+			no-repeat center;
+		background-size: cover;
+		z-index: 1;
+		cursor: pointer;
+
+		user-select: none;
+	}
+
+	.video-volume-control.mute {
+		background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/unmute.png?19Aug2019659")
+			no-repeat center;
+		background-size: cover;
+	}
+
+	.video-cta__button {
+		display: inline-block;
+		font-size: 13px;
+		text-transform: capitalize;
+		border-radius: 3px;
+		text-align: center;
+		text-decoration: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		font-weight: bold;
+		z-index: 1;
+		width: 100%;
+		height: 160px;
+	}
+
+	.impression-tag {
+		visibility: hidden;
+	}
+
+	.video-container {
+		width: 316px;
+		height: 178px;
+		position: absolute;
+		top: 100px;
+		left: 50%;
+		transform: translatex(-50%);
+	}
+
+	.video-container iframe {
+		width: 100%;
+		height: 100%;
+		border: none;
+	}
+
+	/* added for youtube player */
+	.youtube-overlay {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		user-select: none;
+		cursor: pointer;
+	}
+</style>
+
+<script>
+	var trackingObjJson = '{"videoData":{"videoName":"THAR ROXX","videoID":"qYp3KqUEzWE"}}';
+	var trackingObj = JSON.parse(trackingObjJson);
+	var video = trackingObj.videoData.videoID;
+
+	var tag = document.createElement("script");
+	tag.src = "https://www.youtube.com/iframe_api";
+	var volumeControlElem = document.querySelector(".video-volume-control");
+	var firstScriptTag = document.getElementsByTagName("script")[0];
+	interface PlayerInfo {
+		id: string;
+		videoId: any;
+		playerVars: {
+			autoplay: number;
+			controls: number;
+			rel: number;
+			showinfo: number;
+			loop: number;
+			playlist: any;
+			playsinline: number;
+			fs: number;
+			vq: string;
+			showMute: number;
+		};
+		events: {
+			onReady: (event: any) => void;
+			onStateChange: (event: any) => void;
+			onVolumeChange: (event: any) => void;
+		};
+	}
+
+	var playerInfoList: PlayerInfo[] = [],
+		playerBanner,
+		player_popup,
+		volumeMuteState = false,
+		vtrTime,
+		vtrInterval,
+		trackedTimeSet = new Set(),
+		lastTrackedTime = 0;
+
+	try {
+		tag.src = "https://www.youtube.com/iframe_api";
+		if (firstScriptTag.parentNode) {
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		}
+	} catch (e) {
+		console.log("error_first = " + e);
+	}
+
+	if (
+		window.hasOwnProperty("playerInfoList") &&
+		typeof playerInfoList !== "undefined" &&
+		playerInfoList !== null
+	) {
+		addBannerWebcastMobilePlayerToList();
+	} else {
+		(window as any).playerInfoList = [];
+		addBannerWebcastMobilePlayerToList();
+	}
+
+	function addBannerWebcastMobilePlayerToList() {
+		const i = playerInfoList.findIndex((_element) => _element?.id === "YouTubeVideoPlayer");
+		if (i > -1 && playerInfoList[i]) {
+			playerInfoList[i].videoId = video;
+			playerInfoList[i].playerVars.playlist = video;
+		} else {
+			playerInfoList.push({
+				id: "YouTubeVideoPlayer",
+				videoId: video,
+				playerVars: {
+					autoplay: 1,
+					controls: 0,
+					rel: 0,
+					showinfo: 0,
+					loop: 1,
+					playlist: video,
+					playsinline: 1,
+					fs: 0,
+					vq: "medium",
+					showMute: 0,
+				},
+				events: {
+					onReady: onReadyPlayer,
+					onStateChange: onPlayerStateChange,
+					onVolumeChange: onPlayerVolumeChange,
+				},
+			});
+		}
+	}
+
+	function onReadyPlayer(e) {
+		e.target.mute();
+		volumeMuteState = true;
+		e.target.playVideo();
+		const videoDuration = e.target.getDuration();
+		vtrTime = Math.round(videoDuration / 4);
+	}
+
+	function onPlayerVolumeChange(event) {
+		if (event.target.isMuted() && volumeMuteState) {
+			if (volumeControlElem) {
+				volumeControlElem.classList.remove("mute");
+			}
+		} else if (!event.target.isMuted() && !volumeMuteState) {
+			if (volumeControlElem) {
+				volumeControlElem.classList.add("mute");
+			}
+		}
+	}
+
+	function trackVTREvent(currentTime) {
+		const lastTrackedTime = getLastValue(trackedTimeSet);
+		if (currentTime < lastTrackedTime) {
+			trackedTimeSet.clear();
+		}
+		const trackTime = Math.floor(currentTime / vtrTime) * vtrTime;
+		if (trackTime !== 0 && lastTrackedTime !== trackTime) {
+			trackedTimeSet.add(trackTime);
+		}
+	}
+
+	function getLastValue(set) {
+		return Array.from(set).pop() || 0;
+	}
+
+	function onPlayerStateChange(event) {
+		switch (event.data) {
+			case YT.PlayerState.PLAYING:
+				vtrInterval = setInterval(() => {
+					trackVTREvent(playerBanner?.getCurrentTime());
+				}, 1000);
+				break;
+			case YT.PlayerState.PAUSED:
+				clearInterval(vtrInterval);
+				break;
+
+			case -1:
+				clearInterval(vtrInterval);
+				break;
+		}
+	}
+
+	if (typeof YTConfig == "object") {
+		onYouTubePlayerAPIReady();
+	}
+
+	async function onYouTubePlayerAPIReady() {
+		if (
+			typeof playerInfoList === "undefined" ||
+			playerInfoList === null ||
+			playerInfoList.length === 0
+		)
+			return;
+		let curplayer;
+		for (var i = 0; i < playerInfoList.length; i++) {
+			curplayer = await createPlayer(playerInfoList[i]);
+			if (playerInfoList[i].id === "YouTubeVideoPlayer") {
+				playerBanner = curplayer;
+			}
+			if (playerInfoList[i].id === "YouTubeVideoPlayer_SF") {
+				const playerSf = curplayer;
+			}
+			if (playerInfoList[i].id === "player_popup") {
+				player_popup = curplayer;
+			}
+		}
+	}
+
+	function createPlayer(playerInfo) {
+		try {
+			const player = new YT.Player(playerInfo.id, {
+				videoId: playerInfo.videoId,
+				playerVars: playerInfo.playerVars,
+				events: playerInfo.events,
+			});
+			return player;
+		} catch (e) {
+			console.error("error = " + e);
+		}
+	}
+
+	function handleVolumeClick() {
+		if (volumeControlElem) {
+			if (volumeControlElem.classList.contains("mute")) {
+				volumeControlElem.classList.remove("mute");
+				playerBanner.mute();
+			} else {
+				volumeControlElem.classList.add("mute");
+				playerBanner.unMute();
+			}
+		}
+	}
+
+	function attachEventListeners() {
+		if (volumeControlElem) {
+			volumeControlElem.addEventListener("click", handleVolumeClick);
+		}
+	}
+
+	function initializeVersionPagePQVideo() {
+		attachEventListeners();
+	}
+
+	if (document.querySelector(".js-impression-tracking-pq_banner")) {
+		initializeVersionPagePQVideo();
+	} else {
+		window.addEventListener("load", function () {
+			initializeVersionPagePQVideo();
+		});
+	}
+</script>
+
+<script>
+	const VIEWPORT_WIDTH = 316;
+	const VIDEO_WIDTH = VIEWPORT_WIDTH;
+	const VIDEO_HEIGHT = VIDEO_WIDTH * 0.5625;
+	const BASE_HEIGHT = Math.max(VIDEO_HEIGHT * 1.5, 300);
+
+	const BLACK_SPACE_HEIGHT = BASE_HEIGHT - VIDEO_HEIGHT;
+	const BLACK_SPACE_HEIGHT_HALF = BLACK_SPACE_HEIGHT / 2;
+
+	const webcastIframe = document.querySelector("#YouTubeVideoPlayer") as HTMLElement;
+	const wrapper = document.querySelector(".youtube-player-wrapper") as HTMLElement;
+
+	if (webcastIframe) {
+		webcastIframe.style.height = `${BASE_HEIGHT}px`;
+		webcastIframe.style.width = `${VIDEO_WIDTH}px`;
+		webcastIframe.style.transform = `translateY(-${BLACK_SPACE_HEIGHT_HALF}px)`;
+		webcastIframe.style.userSelect = "none";
+	}
+
+	if (wrapper) {
+		wrapper.style.width = `${VIDEO_WIDTH}px`;
+		wrapper.style.height = `${VIDEO_HEIGHT}px`;
+		wrapper.style.position = "absolute";
+		wrapper.style.overflow = "hidden";
+	}
+</script>

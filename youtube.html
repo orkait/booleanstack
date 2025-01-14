@@ -1,0 +1,135 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="./youtube.js"></script>
+	</head>
+	<style>
+		/* video player styles */
+		.search--container .welcome-box-container {
+			z-index: 1;
+		}
+
+		.pq-banner-m-container {
+			height: 230px;
+			position: relative;
+			width: 320px;
+			margin: 0 auto;
+		}
+
+		/* campaign styles */
+		.es-pqbanner-container {
+			background-image: url(https://imgd.aeplcdn.com/0x0/media/cw/t2edieb_1764125.jpg);
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
+			height: 450px;
+			margin-top: 36px;
+			margin-bottom: 7px;
+			width: 100%;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			-webkit-justify-content: space-between;
+			justify-content: space-between;
+		}
+
+		.banner-cta-container-1 {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 84px;
+			width: 100%;
+		}
+
+		.video-volume-control {
+			width: 34px;
+			height: 34px;
+			position: absolute;
+			bottom: 16px;
+			left: 16px;
+			background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/mute.png?19Aug2019659")
+				no-repeat center;
+			background-size: cover;
+			z-index: 1;
+			cursor: pointer;
+
+			user-select: none;
+		}
+
+		.video-volume-control.mute {
+			background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/unmute.png?19Aug2019659")
+				no-repeat center;
+			background-size: cover;
+		}
+
+		.video-cta__button {
+			display: inline-block;
+			font-size: 13px;
+			text-transform: capitalize;
+			border-radius: 3px;
+			text-align: center;
+			text-decoration: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-weight: bold;
+			z-index: 1;
+			width: 100%;
+			height: 160px;
+		}
+
+		.impression-tag {
+			visibility: hidden;
+		}
+
+		.video-container {
+			width: 316px;
+			height: 178px;
+			position: absolute;
+			top: 100px;
+			left: 50%;
+			transform: translatex(-50%);
+		}
+
+		.video-container iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+	</style>
+	<body>
+		<div class="video-container">
+			<div class="youtube-player-wrapper">
+				<div id="YouTubeVideoPlayer"></div>
+				<div class="video-volume-control"></div>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		// Initialize the manager
+		var playerManager = new YouTubePlayerManager();
+
+		// Function to be called when YouTube API is ready
+		function onYouTubeIframeAPIReady() {
+			playerManager.createPlayer(
+				{
+					elementId: "YouTubeVideoPlayer",
+					videoId: "qYp3KqUEzWE",
+				},
+				function (player) {
+					// Player is ready
+					console.log("Player is ready");
+				}
+			);
+		}
+
+		// Example volume control
+		function toggleVolume() {
+			playerManager.toggleMute("YouTubeVideoPlayer");
+		}
+	</script>
+</html>
