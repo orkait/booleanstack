@@ -2,134 +2,255 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-		<script src="./youtube.js"></script>
 	</head>
-	<style>
-		/* video player styles */
-		.search--container .welcome-box-container {
-			z-index: 1;
-		}
-
-		.pq-banner-m-container {
-			height: 230px;
-			position: relative;
-			width: 320px;
-			margin: 0 auto;
-		}
-
-		/* campaign styles */
-		.es-pqbanner-container {
-			background-image: url(https://imgd.aeplcdn.com/0x0/media/cw/t2edieb_1764125.jpg);
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: cover;
-			height: 450px;
-			margin-top: 36px;
-			margin-bottom: 7px;
-			width: 100%;
-			display: -webkit-flex;
-			display: flex;
-			-webkit-flex-direction: column;
-			flex-direction: column;
-			-webkit-justify-content: space-between;
-			justify-content: space-between;
-		}
-
-		.banner-cta-container-1 {
-			position: absolute;
-			left: 0;
-			top: 0;
-			height: 84px;
-			width: 100%;
-		}
-
-		.video-volume-control {
-			width: 34px;
-			height: 34px;
-			position: absolute;
-			bottom: 16px;
-			left: 16px;
-			background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/mute.png?19Aug2019659")
-				no-repeat center;
-			background-size: cover;
-			z-index: 1;
-			cursor: pointer;
-
-			user-select: none;
-		}
-
-		.video-volume-control.mute {
-			background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/unmute.png?19Aug2019659")
-				no-repeat center;
-			background-size: cover;
-		}
-
-		.video-cta__button {
-			display: inline-block;
-			font-size: 13px;
-			text-transform: capitalize;
-			border-radius: 3px;
-			text-align: center;
-			text-decoration: none;
-			position: absolute;
-			top: 0;
-			left: 0;
-			font-weight: bold;
-			z-index: 1;
-			width: 100%;
-			height: 160px;
-		}
-
-		.impression-tag {
-			visibility: hidden;
-		}
-
-		.video-container {
-			width: 316px;
-			height: 178px;
-			position: absolute;
-			top: 100px;
-			left: 50%;
-			transform: translatex(-50%);
-		}
-
-		.video-container iframe {
-			width: 100%;
-			height: 100%;
-			border: none;
-		}
-	</style>
 	<body>
-		<div class="video-container">
-			<div class="youtube-player-wrapper">
-				<div id="YouTubeVideoPlayer"></div>
-				<div class="video-volume-control"></div>
-			</div>
+		<div class="youtube-player-wrapper">
+			<div id="YouTubeVideoPlayer"></div>
+			<div class="video-volume-control"></div>
 		</div>
-	</body>
+		<style>
+			.video-volume-control {
+				width: 34px;
+				height: 34px;
+				position: absolute;
+				bottom: 16px;
+				left: 16px;
+				background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/mute.png?19Aug2019659")
+					no-repeat center;
+				background-size: cover;
+				z-index: 1;
+				cursor: pointer;
+				user-select: none;
+			}
 
-	<script>
-		// Initialize the manager
-		var playerManager = new YouTubePlayerManager();
+			.video-volume-control.mute {
+				background: url("https://imgd.aeplcdn.com/0x0/cw/es/video-wallpaper/porsche/unmute.png?19Aug2019659")
+					no-repeat center;
+				background-size: cover;
+			}
+		</style>
 
-		// Function to be called when YouTube API is ready
-		function onYouTubeIframeAPIReady() {
-			playerManager.createPlayer(
-				{
-					elementId: "YouTubeVideoPlayer",
-					videoId: "qYp3KqUEzWE",
-				},
-				function (player) {
-					// Player is ready
-					console.log("Player is ready");
+		<script>
+			class YouTubePlayerManager {
+				constructor() {
+					this.players = new Map();
+					this.trackingIntervals = new Map();
+					this.trackedTimes = new Set();
+					this.vtrTime = 0;
+					this.readyCallbacks = new Map();
+					this.volumeMuteState = true; // Start muted
+
+					// Initialize YouTube API
+					this.loadYouTubeAPI();
+
+					// Initialize volume control
+					this.volumeControlElem = document.querySelector(".video-volume-control");
+					if (this.volumeControlElem) {
+						this.volumeControlElem.addEventListener("click", () =>
+							this.handleVolumeClick()
+						);
+					}
 				}
-			);
-		}
 
-		// Example volume control
-		function toggleVolume() {
-			playerManager.toggleMute("YouTubeVideoPlayer");
-		}
-	</script>
+				loadYouTubeAPI() {
+					const tag = document.createElement("script");
+					tag.src = "https://www.youtube.com/iframe_api";
+					const firstScriptTag = document.getElementsByTagName("script")[0];
+					firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+				}
+
+				createPlayer(config, callback) {
+					const {
+						elementId,
+						videoId,
+						options = {
+							autoplay: 1,
+							controls: 0,
+							rel: 0,
+							showinfo: 0,
+							loop: 1,
+							playlist: videoId, // Required for looping
+							playsinline: 1,
+							fs: 0,
+							vq: "medium",
+						},
+					} = config;
+
+					// Store callback to be called when player is ready
+					this.readyCallbacks.set(elementId, callback);
+
+					try {
+						const player = new YT.Player(elementId, {
+							videoId,
+							playerVars: options,
+							events: {
+								onReady: (event) => this.handlePlayerReady(event, elementId),
+								onStateChange: (event) =>
+									this.handlePlayerStateChange(event, elementId),
+								onError: (event) =>
+									console.error("YouTube player error:", event.data),
+							},
+						});
+
+						this.players.set(elementId, player);
+					} catch (error) {
+						console.error("Error creating YouTube player:", error);
+					}
+				}
+
+				handlePlayerReady(event, playerId) {
+					const player = event.target;
+
+					// Initial mute state
+					player.mute();
+					this.volumeMuteState = true;
+					if (this.volumeControlElem) {
+						this.volumeControlElem.classList.remove("mute");
+					}
+
+					player.playVideo();
+
+					// Calculate VTR time segments
+					const videoDuration = player.getDuration();
+					this.vtrTime = Math.round(videoDuration / 4);
+
+					// Execute callback if exists
+					const callback = this.readyCallbacks.get(playerId);
+					if (callback) {
+						callback(player);
+						this.readyCallbacks.delete(playerId);
+					}
+				}
+
+				handlePlayerStateChange(event, playerId) {
+					const player = this.players.get(playerId);
+					if (!player) return;
+
+					switch (event.data) {
+						case YT.PlayerState.PLAYING:
+							// Start tracking view time
+							const interval = setInterval(() => {
+								this.trackViewTime(playerId);
+							}, 1000);
+							this.trackingIntervals.set(playerId, interval);
+							break;
+
+						case YT.PlayerState.PAUSED:
+						case -1: // Unstarted
+							// Clear tracking interval
+							clearInterval(this.trackingIntervals.get(playerId));
+							this.trackingIntervals.delete(playerId);
+							break;
+
+						case YT.PlayerState.ENDED:
+							// Ensure loop works
+							player.playVideo();
+							break;
+					}
+				}
+
+				handleVolumeClick() {
+					const player = this.players.get("YouTubeVideoPlayer");
+					if (!player) return;
+
+					if (this.volumeMuteState) {
+						player.unMute();
+						this.volumeMuteState = false;
+						this.volumeControlElem?.classList.add("mute");
+					} else {
+						player.mute();
+						this.volumeMuteState = true;
+						this.volumeControlElem?.classList.remove("mute");
+					}
+				}
+
+				trackViewTime(playerId) {
+					const player = this.players.get(playerId);
+					if (!player) return;
+
+					const currentTime = player.getCurrentTime();
+					const lastTrackedTime = Array.from(this.trackedTimes).pop() || 0;
+
+					// Reset tracking if video restarted
+					if (currentTime < lastTrackedTime) {
+						this.trackedTimes.clear();
+					}
+
+					// Track time in VTR segments
+					const trackTime = Math.floor(currentTime / this.vtrTime) * this.vtrTime;
+					if (trackTime !== 0 && lastTrackedTime !== trackTime) {
+						this.trackedTimes.add(trackTime);
+					}
+				}
+
+				destroy(playerId) {
+					const player = this.players.get(playerId);
+					if (player) {
+						clearInterval(this.trackingIntervals.get(playerId));
+						this.trackingIntervals.delete(playerId);
+						this.players.delete(playerId);
+						player.destroy();
+					}
+
+					// Remove event listeners
+					if (this.volumeControlElem) {
+						this.volumeControlElem.removeEventListener("click", this.handleVolumeClick);
+					}
+				}
+			}
+		</script>
+
+		<script>
+			let playerManager;
+
+			// This function will be called by YouTube API when it's ready
+			function onYouTubeIframeAPIReady() {
+				console.log("YouTube API Ready");
+				playerManager.createPlayer(
+					{
+						elementId: "YouTubeVideoPlayer",
+						videoId: "qYp3KqUEzWE",
+					},
+					function (player) {
+						console.log("Player is ready");
+					}
+				);
+			}
+
+			// Initialize everything else when the DOM is ready
+			document.addEventListener("DOMContentLoaded", function () {
+				// Initialize the manager
+				playerManager = new YouTubePlayerManager();
+
+				// Add styles for iframe sizing
+				const VIEWPORT_WIDTH = Math.max(
+					document.documentElement.clientWidth || 0,
+					window.innerWidth || 0
+				);
+				const VIDEO_WIDTH = VIEWPORT_WIDTH;
+				const VIDEO_HEIGHT = VIDEO_WIDTH * 0.5625;
+				const BASE_HEIGHT = Math.max(VIDEO_HEIGHT * 1.5, 300);
+
+				const BLACK_SPACE_HEIGHT = BASE_HEIGHT - VIDEO_HEIGHT;
+				const BLACK_SPACE_HEIGHT_HALF = BLACK_SPACE_HEIGHT / 2;
+
+				const webcastIframe = document.querySelector("#YouTubeVideoPlayer");
+				const wrapper = document.querySelector(".youtube-player-wrapper");
+
+				if (webcastIframe) {
+					webcastIframe.style.height = `${BASE_HEIGHT}px`;
+					webcastIframe.style.width = `${VIDEO_WIDTH}px`;
+					webcastIframe.style.transform = `translateY(-${BLACK_SPACE_HEIGHT_HALF}px)`;
+					webcastIframe.style.userSelect = "none";
+				}
+
+				if (wrapper) {
+					wrapper.style.width = `${VIDEO_WIDTH}px`;
+					wrapper.style.height = `${VIDEO_HEIGHT}px`;
+					wrapper.style.position = "absolute";
+					wrapper.style.overflow = "hidden";
+				}
+			});
+		</script>
+	</body>
 </html>
