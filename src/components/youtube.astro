@@ -1,5 +1,5 @@
 ---
-
+const { videoId } = Astro.props;
 ---
 
 <div class="youtube-player-wrapper">
@@ -7,9 +7,7 @@
 	<div class="video-volume-control"></div>
 </div>
 
-<script
-    is:inline
->
+<script is:inline>
 	class YouTubePlayerManager {
 		constructor() {
 			this.players = new Map();
@@ -196,10 +194,7 @@
 		playerManager = new YouTubePlayerManager();
 
 		// Add styles for iframe sizing
-		const VIEWPORT_WIDTH = Math.max(
-			document.documentElement.clientWidth || 0,
-			window.innerWidth || 0
-		);
+		const VIEWPORT_WIDTH = 720;
 		const VIDEO_WIDTH = VIEWPORT_WIDTH;
 		const VIDEO_HEIGHT = VIDEO_WIDTH * 0.5625;
 		const BASE_HEIGHT = Math.max(VIDEO_HEIGHT * 1.5, 300);
