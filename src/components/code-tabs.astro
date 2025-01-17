@@ -1,9 +1,9 @@
 ---
-const { tabs } = Astro.props;
+const { tabs, componentId = crypto.randomUUID() } = Astro.props;
 import { Code } from "astro:components";
 ---
 
-<div class="code-tabs mt-1">
+<div class="code-tabs mt-1" id={componentId}>
 	<!-- Tab Buttons -->
 	<div role="tablist" class="tabs tabs-boxed bg-transparent">
 		{
@@ -23,23 +23,22 @@ import { Code } from "astro:components";
 					class={index === 0 ? "code-block tab-active" : "code-block hidden"}
 					data-lang={lang}
 				>
-					<Code
-                        class="m-0"
-						theme="ayu-dark"
-						lang={lang as any}
-						code={code as any}
-					/>
+					<Code class="m-0" theme="ayu-dark" lang={lang as any} code={code as any} />
 				</div>
 			))
 		}
 	</div>
 </div>
 
-<script is:inline>
+<script define:vars={{ componentId }}>
 	(() => {
-		// Handle tab switching
-		var tabButtons = document.querySelectorAll(".tab");
-		var codeBlocks = document.querySelectorAll(".code-block");
+		// Get the specific component container
+		const container = document.getElementById(componentId);
+		if (!container) return;
+
+		// Scope selectors to this specific instance
+		const tabButtons = container.querySelectorAll(".tab");
+		const codeBlocks = container.querySelectorAll(".code-block");
 
 		function activateTab(lang) {
 			// Remove active class from all buttons first
@@ -48,7 +47,7 @@ import { Code } from "astro:components";
 			});
 
 			// Add active class to the clicked button
-			const activeButton = document.querySelector(`.tab[data-lang="${lang}"]`);
+			const activeButton = container.querySelector(`.tab[data-lang="${lang}"]`);
 			if (activeButton) {
 				activeButton.classList.add("tab-active");
 			}

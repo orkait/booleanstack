@@ -26,7 +26,7 @@ export default defineConfig({
 			syntaxHighlight: "shiki",
 			shikiConfig: {
 				theme: "houston",
-				langs: ["cpp", "java", "python"],
+				langs: ["cpp", "java", "python", "mdx", "javascript", "typescript", "json", "html", "css", "xml", "yaml", "markdown"],
 			},
 			remarkPlugins: [remarkMath],
 			rehypePlugins: [rehypeKatex, rehypePresetMinify],

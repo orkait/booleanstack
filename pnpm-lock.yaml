@@ -62,6 +62,9 @@ importers:
       astro-embed:
         specifier: ^0.9.0
         version: 0.9.0(astro@4.8.6(@types/node@20.12.12)(typescript@5.4.5))
+      astro-lazy-youtube-embed:
+        specifier: ^0.5.4
+        version: 0.5.4(astro@4.8.6(@types/node@20.12.12)(typescript@5.4.5))
       astro-tweet:
         specifier: ^0.0.4
         version: 0.0.4(astro@4.8.6(@types/node@20.12.12)(typescript@5.4.5))(prettier-plugin-astro@0.13.0)(prettier@3.2.5)
@@ -1792,6 +1795,11 @@ packages:
   astro-eslint-parser@1.0.2:
     resolution: {integrity: sha512-8hJaCuqxObShWl2wEsnASqh/DbQ2O+S66m0Q3ctJlzBPEQ4pfGwwama3FCjZO3GDLQsjvn1T0v93Vxyu/+5fGw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  astro-lazy-youtube-embed@0.5.4:
+    resolution: {integrity: sha512-6Nd52ndiC7qM9jBC2/iAVsgbGMLBEHo0NfyECTyvsoKlei5Crl8S279Y8QhbKei+L6/FPSIijRV+ztY9/Pd3Wg==}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta || ^5.0.0-beta
 
   astro-tweet@0.0.4:
     resolution: {integrity: sha512-D4rpm8r2AiDeY2L+wee1+smVojLd0Qd114NqO4uuczWh4R0hbJTwgd4fpyGp87M6SmF1g85d5QejxLzLjGn3rw==}
@@ -6027,6 +6035,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  astro-lazy-youtube-embed@0.5.4(astro@4.8.6(@types/node@20.12.12)(typescript@5.4.5)):
+    dependencies:
+      astro: 4.8.6(@types/node@20.12.12)(typescript@5.4.5)
 
   astro-tweet@0.0.4(astro@4.8.6(@types/node@20.12.12)(typescript@5.4.5))(prettier-plugin-astro@0.13.0)(prettier@3.2.5):
     dependencies:

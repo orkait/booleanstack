@@ -1,0 +1,79 @@
+---
+import Layout from "../../components/layout.astro";
+import CodeTabs from "../../components/code-tabs.astro";
+import { injectCode } from "../../utils/blog-utils";
+---
+
+<Layout>
+	<div class="prose max-w-container mx-auto px-4">
+		<h1>CodeTabs is Custom Component for Code Snippets</h1>
+
+		<CodeTabs
+			tabs={{
+				markdown: injectCode(`
+                    ---
+                    | props      |  type       | default  | required | description | 
+                    |------------|-------------|----------|----------|-------------|
+                    | tabs       |  object     |          | true     | Code snippets to display in tabs |
+                    | componentId|  string     |          | false    | Unique ID for the component |
+                    ---
+                    `),
+			}}
+		/>
+		<CodeTabs
+			tabs={{
+				markdown: injectCode(`
+                ---
+                import CodeTabs from "../../components/code-tabs.astro";
+                import { injectCode } from "../../utils/blog-utils";
+                ---
+    
+                <CodeTabs
+                    tabs={{
+                        python: injectCode(\`
+                            from collections import Counter
+                            import heapq
+    
+                            def topKFrequent(nums, k): # Count frequencies
+                                count = Counter(nums)
+    
+                                # Keep k most frequent elements using min-heap
+                                heap = []
+                                for num, freq in count.items():
+                                    heapq.heappush(heap, (freq, num))
+                                    if len(heap) > k:
+                                        heapq.heappop(heap)
+    
+                                # Extract results
+                                return [num for freq, num in heap]
+                        \`),
+                    }}
+                />
+    
+            `),
+			}}
+		/>
+
+		<CodeTabs
+			tabs={{
+				python: injectCode(`
+                    from collections import Counter
+                    import heapq
+
+                    def topKFrequent(nums, k): # Count frequencies
+                        count = Counter(nums)
+
+                        # Keep k most frequent elements using min-heap
+                        heap = []
+                        for num, freq in count.items():
+                            heapq.heappush(heap, (freq, num))
+                            if len(heap) > k:
+                                heapq.heappop(heap)
+
+                        # Extract results
+                        return [num for freq, num in heap]
+                `),
+			}}
+		/>
+	</div>
+</Layout>
