@@ -11,7 +11,10 @@ const darkThemeName = "dark";
 
 module.exports = {
 	darkMode: ["class", `[data-theme="${darkThemeName}"]`],
-	content: ["./src/**/*.{astro,mdx,ts,tsx}"],
+	content: [
+        "./src/**/*.{astro,mdx,ts,tsx}",
+        "./src/components/canvas/BaseCanvas.tsx",
+    ],
 	theme: {
 		extend: {
 			fontFamily: {
