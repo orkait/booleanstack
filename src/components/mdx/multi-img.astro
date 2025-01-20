@@ -1,0 +1,105 @@
+---
+interface Props {
+	srcList: string[];
+	altList?: string[];
+	height?: string;
+	width?: string;
+	maxHeight?: string;
+	maxWidth?: string;
+	aspectRatio?: "16/9" | "4/3" | "1/1" | "3/4" | "9/16";
+}
+
+const {
+	srcList = [],
+	altList = [],
+	height = "auto",
+	width = "auto",
+	maxHeight = "auto",
+	maxWidth = "auto",
+	aspectRatio,
+	...restProps
+} = Astro.props;
+
+// Validate inputs
+if (srcList.length === 0) {
+	console.warn("Image gallery received empty srcList");
+}
+
+if (altList.length > 0 && altList.length !== srcList.length) {
+	console.warn("altList length doesn't match srcList length");
+}
+
+const widthArray: string[] = [];
+const heightArray: string[] = [];
+
+if (aspectRatio) {
+	const [aspectWidth, aspectHeight] = aspectRatio.split("/").map(Number);
+
+	if (width !== "auto" && height === "auto") {
+		heightArray.push(
+			...srcList.map(() => `${(parseInt(width) / aspectWidth) * aspectHeight}px`)
+		);
+		widthArray.push(...srcList.map(() => width));
+	}
+
+	if (height !== "auto" && width === "auto") {
+		widthArray.push(
+			...srcList.map(() => `${(parseInt(height) / aspectHeight) * aspectWidth}px`)
+		);
+		heightArray.push(...srcList.map(() => height));
+	}
+}
+---
+
+<div {...restProps} class="flex gap-2 justify-around">
+	{
+		srcList.length > 0 ? (
+			srcList.map((src, index) => (
+				<div class="relative">
+					<div class="shimmer-placeholder absolute inset-0 w-full h-full bg-gray-300 animate-pulse" />
+					<img
+						class="transition-opacity duration-300 opacity-0 actual-image absolute inset-0 w-full h-full object-cover"
+						src={src}
+						alt={altList[index] || `Image ${index + 1}`}
+						loading="lazy"
+						style={{
+							width: widthArray[index] || width,
+							height: heightArray[index] || height,
+							maxHeight,
+							maxWidth,
+						}}
+					/>
+				</div>
+			))
+		) : (
+			<p class="w-full text-gray-500 text-sm">No images to display</p>
+		)
+	}
+</div>
+
+<script>
+	function handleImageLoad() {
+		const images = document.querySelectorAll(".actual-image");
+		const shimmerPlaceholders = document.querySelectorAll(".shimmer-placeholder");
+
+		images.forEach((img, index) => {
+			if (img.complete && img.naturalWidth > 0) {
+				img.classList.replace("opacity-0", "opacity-100");
+				shimmerPlaceholders[index]?.classList.add("hidden");
+			}
+
+			img.addEventListener("load", () => {
+				img.classList.replace("opacity-0", "opacity-100");
+				shimmerPlaceholders[index]?.classList.add("hidden");
+			});
+
+			img.addEventListener("error", () => {
+				img.style.display = "none";
+			});
+		});
+	}
+
+	// Run on initial load
+	document.addEventListener("DOMContentLoaded", handleImageLoad);
+	document.addEventListener("astro:page-load", handleImageLoad);
+</script>
