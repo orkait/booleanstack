@@ -7,6 +7,7 @@ title: "347. Top K Frequent Elements"
 description: "Find the k most frequent elements in an array using heaps and hash maps."
 date: "2023-12-29"
 tags: ["swift", "cheatsheet"]
+author: "kailas"
 ---
 
 import CodeTabs from "../../components/code-tabs.astro";
@@ -17,9 +18,60 @@ import { YouTube } from "astro-lazy-youtube-embed";
 
 Imagine you're analyzing data from a music streaming service. You want to find the top 3 most played songs from a playlist. That's exactly what this problem helps us solve - finding the k most frequent elements in a list!
 
-<YouTube title="Just Curious - Limmy's Homemade Show" videoId="FfTT7mxGw8I" />
+{/* <YouTube title="Just Curious - Limmy's Homemade Show" videoId="FfTT7mxGw8I" /> */}
 
 ## Problem Statement
+
+<DataTable
+	data={[
+		{ id: 704, name: "Binary Search", difficulty: "Basic" },
+		{ id: 35, name: "Search Insert Position", difficulty: "Basic" },
+		{ id: 744, name: "Find Smallest Letter Greater Than Target", difficulty: "Basic" },
+		{ id: 69, name: "Sqrt(x)", difficulty: "Basic" },
+		{ id: 367, name: "Valid Perfect Square", difficulty: "Basic" },
+		{ id: 33, name: "Search in Rotated Sorted Array", difficulty: "Rotated Arrays" },
+		{ id: 81, name: "Search in Rotated Sorted Array II", difficulty: "Rotated Arrays" },
+		{ id: 153, name: "Find Minimum in Rotated Sorted Array", difficulty: "Rotated Arrays" },
+		{ id: 154, name: "Find Minimum in Rotated Sorted Array II", difficulty: "Rotated Arrays" },
+		{ id: 852, name: "Peak Index in a Mountain Array", difficulty: "Finding Boundaries" },
+		{ id: 162, name: "Find Peak Element", difficulty: "Finding Boundaries" },
+		{
+			id: 34,
+			name: "Find First and Last Position of Element in Sorted Array",
+			difficulty: "Finding Boundaries",
+		},
+		{ id: 875, name: "Koko Eating Bananas", difficulty: "On Answer" },
+		{ id: 1011, name: "Capacity To Ship Packages Within D Days", difficulty: "On Answer" },
+		{ id: 1283, name: "Find the Smallest Divisor Given a Threshold", difficulty: "On Answer" },
+		{ id: 410, name: "Split Array Largest Sum", difficulty: "On Answer" },
+		{ id: 719, name: "Find K-th Smallest Pair Distance", difficulty: "On Answer" },
+		{ id: 1201, name: "Ugly Number III", difficulty: "On Answer" },
+		{ id: 1482, name: "Minimum Number of Days to Make m Bouquets", difficulty: "On Answer" },
+		{ id: 718, name: "Maximum Length of Repeated Subarray", difficulty: "Advanced" },
+		{ id: 209, name: "Minimum Size Subarray Sum", difficulty: "Advanced" },
+		{ id: 315, name: "Count of Smaller Numbers After Self", difficulty: "Advanced" },
+		{ id: 4, name: "Median of Two Sorted Arrays", difficulty: "Advanced" },
+		{ id: "", name: "Aggressive Cows", difficulty: "Advanced" },
+		{ id: "", name: "Allocate Books", difficulty: "Advanced" },
+	]}
+	columns={[
+		{ key: "id", header: "ID", sortable: true },
+		{ key: "name", header: "Name", sortable: true },
+		{ key: "difficulty", header: "Difficulty", sortable: true },
+	]}
+	striped
+	hoverable
+/>
+
+<SingleImg src="https://i.imgur.com/7SwFIHZ.png" alt="Top K Frequent Elements" imageWidth="100%" />
+
+<SingleImg
+	src="https://placehd.co/300x100"
+	alt="Top K Frequent Elements"
+	shouldContain={true}
+	imageHeight="150px"
+	aspectRatio="1/1"
+/>
 
 Given an array of numbers and an integer k, return the k most frequent elements. You can return
 the answer in any order.
@@ -119,8 +171,8 @@ Let's walk through the Python solution with `nums = [1,1,1,2,2,3]` and `k = 2`:
 
 ## Time and Space Complexity
 
--   Time: O(n log k) where n is the length of nums
--   Space: O(n) for storing the frequency map
+- Time: O(n log k) where n is the length of nums
+- Space: O(n) for storing the frequency map
 
 ## Key Takeaways
 

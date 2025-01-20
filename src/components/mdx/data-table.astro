@@ -1,0 +1,197 @@
+---
+interface Column {
+	key: string;
+	header: string;
+	sortable?: boolean;
+	format?: (value: any) => string;
+	width?: string;
+}
+
+interface Props {
+	/** JSON data array */
+	data: Record<string, any>[];
+	/** Column definitions */
+	columns: Column[];
+	/** Show table header */
+	showHeader?: boolean;
+	/** Enable zebra striping */
+	striped?: boolean;
+	/** Make table hoverable */
+	hoverable?: boolean;
+	/** Add borders */
+	bordered?: boolean;
+	/** Make table compact */
+	compact?: boolean;
+	/** Custom class for the table */
+	class?: string;
+	/** Loading state */
+	loading?: boolean;
+	/** Number of skeleton rows to show while loading */
+	skeletonRows?: number;
+}
+
+const {
+	data = [],
+	columns = [],
+	showHeader = true,
+	striped = false,
+	hoverable = false,
+	bordered = false,
+	compact = false,
+	class: className = "",
+	loading = false,
+	skeletonRows = 5,
+	...rest
+} = Astro.props;
+
+// Validate columns against data
+const validColumns = columns.filter((col) => {
+	const hasKey = data.length === 0 || data[0].hasOwnProperty(col.key);
+	if (!hasKey) {
+		console.warn(`Column key "${col.key}" not found in data`);
+	}
+	return hasKey;
+});
+
+// Get table classes
+const tableClasses = [
+	"table w-full",
+	striped && "table-zebra",
+	hoverable && "table-hover",
+	bordered && "table-bordered",
+	compact && "table-compact",
+	className,
+]
+	.filter(Boolean)
+	.join(" ");
+---
+
+<div class="relative overflow-x-auto">
+	<table class={tableClasses} {...rest}>
+		{
+			showHeader && (
+				<thead>
+					<tr>
+						{validColumns.map((column) => (
+							<th
+								class:list={[
+									"text-left",
+									column.sortable && "cursor-pointer hover:bg-base-200",
+								]}
+								style={column.width ? `width: ${column.width}` : ""}
+								data-key={column.key}
+							>
+								<div class="flex items-center gap-2">
+									{column.header}
+									{column.sortable && (
+										<span class="sort-icon opacity-50">↕</span>
+									)}
+								</div>
+							</th>
+						))}
+					</tr>
+				</thead>
+			)
+		}
+
+		<tbody>
+			{
+				loading ? (
+					/* Skeleton loading state */
+					Array(skeletonRows)
+						.fill(0)
+						.map((_, rowIndex) => (
+							<tr>
+								{validColumns.map((column, colIndex) => (
+									<td>
+										<div class="skeleton h-4 w-full opacity-20" />
+									</td>
+								))}
+							</tr>
+						))
+				) : data.length > 0 ? (
+					/* Actual data rows */
+					data.map((row, rowIndex) => (
+						<tr>
+							{validColumns.map((column) => (
+								<td>
+									{column.format
+										? column.format(row[column.key])
+										: row[column.key]?.toString() || ""}
+								</td>
+							))}
+						</tr>
+					))
+				) : (
+					/* No data state */ <tr>
+						<td
+							colspan={validColumns.length}
+							class="text-center py-4 text-base-content/50"
+						>
+							No data available
+						</td>
+					</tr>
+				)
+			}
+		</tbody>
+	</table>
+</div>
+
+<script>
+	function setupTableSorting() {
+		const tables = document.querySelectorAll("table");
+
+		tables.forEach((table) => {
+			const headers = table.querySelectorAll("th[data-key]");
+
+			headers.forEach((header) => {
+				if (header instanceof HTMLElement) {
+					const key = header.dataset.key;
+					let sortDirection = "asc";
+
+					header.addEventListener("click", () => {
+						const rows = Array.from(table.querySelectorAll("tbody tr"));
+						const sortIcon = header.querySelector(".sort-icon");
+
+						// Update sort icons
+						headers.forEach((h) => {
+							const icon = h.querySelector(".sort-icon");
+							if (icon) icon.textContent = "↕";
+						});
+
+						if (sortIcon) {
+							sortIcon.textContent = sortDirection === "asc" ? "↓" : "↑";
+						}
+
+						// Sort rows
+						rows.sort((a, b) => {
+							const aVal =
+								a.children[Array.from(headers).indexOf(header)].textContent || "";
+							const bVal =
+								b.children[Array.from(headers).indexOf(header)].textContent || "";
+
+							if (sortDirection === "asc") {
+								return aVal.localeCompare(bVal, undefined, { numeric: true });
+							} else {
+								return bVal.localeCompare(aVal, undefined, { numeric: true });
+							}
+						});
+
+						// Update table
+						const tbody = table.querySelector("tbody");
+						if (tbody) {
+							rows.forEach((row) => tbody.appendChild(row));
+						}
+
+						// Toggle direction
+						sortDirection = sortDirection === "asc" ? "desc" : "asc";
+					});
+				}
+			});
+		});
+	}
+
+	// Setup on initial load and page transitions
+	setupTableSorting();
+	document.addEventListener("astro:page-load", setupTableSorting);
+</script>

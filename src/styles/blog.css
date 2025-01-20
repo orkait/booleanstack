@@ -45,3 +45,11 @@ h2 {
 .prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
 	@apply mt-4 mb-2;
 }
+
+img[src="/resource_unavailable.svg"] {
+	@apply shadow-none dark:bg-[var(--tw-prose-headings)] p-3;
+}
+
+.single-img {
+	@apply rounded-md dark:border-transparent border-[1px] mt-4 mb-4 ;
+}

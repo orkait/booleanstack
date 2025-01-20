@@ -1,0 +1,169 @@
+---
+interface AspectRatioType {
+	"21/9": "21_by_9";
+	"32/9": "32_by_9";
+	"16/9": "16_by_9";
+	"4/3": "4_by_3";
+	"1/1": "1_by_1";
+}
+
+interface Props {
+	/** Image source URL */
+	src: string;
+	/** Alt text and title for the image */
+	description: string;
+	/** Aspect ratio of image */
+	aspectRatio?: keyof AspectRatioType;
+	/** Custom className */
+	class?: string;
+	/** Explicit width */
+	imageWidth?: string;
+	/** Explicit height */
+	imageHeight?: string;
+	/** Placeholder image to show on error */
+	placeholderSrc?: string;
+	/** Browser-level loading strategy */
+	loading?: "lazy" | "eager";
+	/** Browser-level decoding strategy */
+	decoding?: "auto" | "sync" | "async";
+	/** Prevents image stretching */
+	shouldContain?: boolean;
+	/** Controls overflow behavior */
+	isOverflowVisible?: boolean;
+	/** Scale factor for the image */
+	scale?: number;
+	/** For testing purposes */
+	testId?: string;
+}
+
+const {
+	src = "",
+	description,
+	aspectRatio = "16/9",
+	class: className = "",
+	imageWidth,
+	imageHeight,
+	placeholderSrc = "/resource_unavailable.svg",
+	loading = "lazy",
+	decoding = "async",
+	shouldContain = false,
+	isOverflowVisible = false,
+	scale,
+	testId = "image",
+	...rest
+} = Astro.props;
+
+// Calculate aspect ratio padding
+const getAspectRatioPadding = () => {
+	if (!aspectRatio) return undefined;
+	const [ratioWidth, ratioHeight] = aspectRatio.split("/").map(Number);
+	return `${(ratioHeight / ratioWidth) * 100}%`;
+};
+
+// Calculate container styles
+const containerStyle = {
+	width: imageWidth || "100%",
+	height: imageHeight || "100%",
+	paddingBottom: !imageHeight && aspectRatio ? getAspectRatioPadding() : undefined,
+};
+
+// Scale transform if needed
+const scaledStyle =
+	scale && imageWidth && imageHeight
+		? {
+				transform: `scale(${scale})`,
+				transformOrigin: "center center",
+			}
+		: {};
+
+// Combine styles
+const finalContainerStyle = {
+	...containerStyle,
+	...scaledStyle,
+};
+---
+
+<div
+	class:list={[
+		"relative my-3 text-red-500",
+		isOverflowVisible ? "" : "overflow-hidden",
+		className,
+		"self-center",
+        "single-img"
+	]}
+	style={finalContainerStyle}
+	data-testid={`${testId}-wrapper`}
+	{...rest}
+>
+	{/* DaisyUI Skeleton Placeholder */}
+	<div
+		class:list={[
+			"skeleton rounded-none ",
+			"absolute max-w-full h-auto max-h-full m-auto transition-opacity duration-300 ",
+			shouldContain ? "object-contain" : "object-cover",
+			"inset-0 w-full",
+		]}
+		data-testid={`${testId}-skeleton`}
+	>
+	</div>
+
+	{/* Actual Image */}
+	<img
+		class:list={[
+			"absolute m-auto transition-opacity duration-300 opacity-0",
+			shouldContain ? "object-contain" : "object-cover",
+			"inset-0",
+			"h-auto w-full max-w-full max-h-full",
+		]}
+		src={src}
+		data-placeholder-src={placeholderSrc}
+		alt={description}
+		title={description}
+		loading={loading}
+		decoding={decoding}
+		data-testid={testId}
+	/>
+</div>
+
+<script>
+	function setupImages() {
+		const images = document.querySelectorAll("img[data-placeholder-src]");
+		const skeletons = document.querySelectorAll(".skeleton");
+
+		images.forEach((img, index) => {
+			const skeleton = skeletons[index];
+			console.log("skelton --> ", skeleton);
+
+			if (img instanceof HTMLImageElement) {
+				const handleLoad = () => {
+					img.classList.remove("opacity-0");
+					img.classList.add("opacity-100");
+					if (skeleton instanceof HTMLElement) skeleton.style.display = "none";
+				};
+
+				const handleError = () => {
+					const placeholderSrc = img.getAttribute("data-placeholder-src");
+					if (placeholderSrc) {
+						img.src = placeholderSrc;
+						img.setAttribute("data-placeholder", "true");
+						img.addEventListener("load", handleLoad, { once: true });
+					}
+					return;
+				};
+
+				if (img.complete && img.naturalWidth === 0) {
+					handleError();
+				} else if (img.complete && img.naturalWidth > 0) {
+					handleLoad();
+				} else {
+					img.addEventListener("load", handleLoad);
+					img.addEventListener("error", handleError);
+				}
+			}
+		});
+	}
+
+	// Run on initial load and page transitions
+	setupImages();
+	document.addEventListener("astro:page-load", setupImages);
+</script>

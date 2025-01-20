@@ -29,6 +29,9 @@ import Td from "../mdx/td.astro";
 import Th from "../mdx/th.astro";
 import Tr from "../mdx/tr.astro";
 import Ul from "../mdx/ul.astro";
+import MultiImg from "../mdx/multi-img.astro";
+import SingleImg from "../../components/mdx/single-img.astro";
+import DataTable from "../../components/mdx/data-table.astro";
 
 type Props = {
 	post: CollectionEntry<"blog">;
@@ -69,5 +72,8 @@ const { Content } = await post.render();
 		Notation,
 		N: Notation,
 		Tweet,
+        MultiImg,
+        SingleImg,
+        DataTable
 	}}
 />

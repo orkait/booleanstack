@@ -6,6 +6,10 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	--sb-track-color: #232e33;
 	--sb-thumb-color: #6baf8d;
