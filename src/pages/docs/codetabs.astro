@@ -1,7 +1,7 @@
 ---
-import Layout from "../../components/layout.astro";
-import CodeTabs from "../../components/code-tabs.astro";
-import { injectCode } from "../../utils/blog-utils";
+import Layout from "@components/layout.astro";
+import CodeTabs from "@components/code-tabs.astro";
+import { injectCode } from "@src/utils/blog-utils";
 ---
 
 <Layout>
@@ -24,8 +24,8 @@ import { injectCode } from "../../utils/blog-utils";
 			tabs={{
 				markdown: injectCode(`
                 ---
-                import CodeTabs from "../../components/code-tabs.astro";
-                import { injectCode } from "../../utils/blog-utils";
+                import CodeTabs from "@components/code-tabs.astro";
+                import { injectCode } from "@src/utils/blog-utils";
                 ---
     
                 <CodeTabs

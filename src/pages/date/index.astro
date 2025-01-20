@@ -1,12 +1,12 @@
 ---
-import Layout from "../../components/layout.astro";
-import PostListing from "../../components/post/post-list.astro";
-import SlugList from "../../components/slug-list.astro";
+import Layout from "@components/layout.astro";
+import PostListing from "@components/post/post-list.astro";
+import SlugList from "@components/slug-list.astro";
 
-import { posts, years } from "../../helpers";
+import { posts, years } from "@helpers";
 ---
 
 <Layout>
-	<SlugList slugs={years} generateLink={(slug) => `/date/${encodeURI(slug)}`} />
+	<SlugList slugs={years as string[]} generateLink={(slug) => `/date/${encodeURI(slug)}`} />
 	<PostListing posts={posts} />
 </Layout>

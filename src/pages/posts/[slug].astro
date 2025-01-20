@@ -1,11 +1,11 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Layout from "../../components/layout.astro";
-import Tag from "../../components/tag.astro";
+import Layout from "@components/layout.astro";
+import Tag from "@components/tag.astro";
 
 // MDX Components
-import DateTag from "../../components/date-tag.astro";
-import PostContent from "../../components/post/post-content.astro";
+import DateTag from "@components/date-tag.astro";
+import PostContent from "@components/post/post-content.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");

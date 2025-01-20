@@ -1,8 +1,8 @@
 ---
 import "katex/dist/katex.min.css";
-import "../styles/global.css";
-import "../styles/blog.css";
-import { GOOGLE_GTAG } from "../config";
+import "@styles/global.css";
+import "@styles/blog.css";
+import { GOOGLE_GTAG } from "@src/config";
 import { ViewTransitions } from "astro:transitions";
 
 export interface Props {
@@ -31,7 +31,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <!-- Google tag (gtag.js) -->
 <script async is:inline src=`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_GTAG}`></script>
 <script>
-	import { GOOGLE_GTAG } from "../config";
+	import { GOOGLE_GTAG } from "@src/config";
 
 	// @ts-ignore
 	window.dataLayer = window.dataLayer || [];
