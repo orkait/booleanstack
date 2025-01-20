@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro check && astro build",
-		"preview": "astro preview"
+		"preview": "astro preview",
+        "check": "astro check"
 	},
 	"dependencies": {
 		"@astro-community/astro-embed-youtube": "^0.5.6",

@@ -127,7 +127,7 @@ const CustomDraggable = ({ children, onDrag, style, zoom, onClick }) => {
 };
 
 const ZoomableCanvas = () => {
-    const canvasRef = useRef(null);
+    const canvasRef = useRef<HTMLDivElement>(null);
     const [zoom, setZoom] = useState(1);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
@@ -137,6 +137,7 @@ const ZoomableCanvas = () => {
 
     const handleWheel = useCallback((e) => {
         e.preventDefault();
+        if (!canvasRef.current) return;
         const rect = canvasRef.current.getBoundingClientRect();
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
