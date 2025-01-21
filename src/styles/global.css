@@ -87,3 +87,9 @@ svg.rough-annotation {
 .code-tabs {
 	@apply p-0 rounded-lg;
 }
+
+
+.footer{
+    row-gap: 0.5rem;
+    padding-bottom: 50px;
+}
