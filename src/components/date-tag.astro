@@ -9,7 +9,7 @@ const { date } = Astro.props;
 <a
 	href={`/date/${encodeURI(new Date(date).getFullYear().toString())}`}
 	target="_self"
-	class="px-2.5 py-1 text-xs bg-neutral text-neutral-content rounded-full"
+	class="px-2.5 py-1 text-xs bg-neutral text-neutral-content rounded-md"
 >
 	{date}
 </a>

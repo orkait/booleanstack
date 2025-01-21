@@ -13,7 +13,7 @@ const coverImageUrl = post.data.cover ? `${post.data.cover}?w=800&q=80` : "/defa
 ---
 
 <article
-	class="group shadow-white border-[1px] relative overflow-hidden rounded-xl bg-white dark:bg-black shadow-sm hover:shadow-md"
+	class="group max-w-[320px] pb-6 shadow-white border-[1px] relative overflow-hidden rounded-xl bg-white dark:bg-black shadow-sm hover:shadow-md"
 >
 	<div class="aspect-video overflow-hidden">
 		<a href={`/posts/${post.slug}`} class="no-underline" aria-label={`Read ${post.data.title}`}>
@@ -26,17 +26,22 @@ const coverImageUrl = post.data.cover ? `${post.data.cover}?w=800&q=80` : "/defa
 		</a>
 	</div>
 
-	<div class="p-6">
-		<div class="flex flex-wrap items-center mb-4">
+	<div class="px-2 py-2">
+		<div class="flex flex-wrap items-center m-0 p-0">
 			<DateTag date={post.data.date} />
 		</div>
 
-		<a href={`/posts/${post.slug}`} class="no-underline" aria-label={`Read ${post.data.title}`}>
-			<h2
-				class="font-title font-bold text-xl text-gray-900 dark:text-gray-100 leading-tight mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
+		<a
+			href={`/posts/${post.slug}`}
+			class="no-underline m-0 p-0"
+			aria-label={`Read ${post.data.title}`}
+		>
+			<p
+				class="font-title font-bold text-xl text-gray-900 dark:text-gray-100 leading-tight
+                 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 m-0 p-0"
 			>
 				{post.data.title}
-			</h2>
+			</p>
 
 			{
 				post.data.description && (

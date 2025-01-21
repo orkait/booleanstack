@@ -29,7 +29,7 @@ const { post } = Astro.props;
 			<h1 id="header" class="text-center font-black text-5xl mb-0">
 				{post.data.title}
 			</h1>
-			<div class="flex items-center justify-center gap-2">
+			<div class="flex items-center justify-center gap-2 flex-wrap">
 				<DateTag date={post.data.date} />
 				{post.data.tags?.map((tag) => <Tag tag={tag} />)}
 			</div>
