@@ -1,0 +1,13 @@
+---
+import { SimilarityIndex } from "@helpers/simalarity";
+import { getCollection } from "astro:content";
+import PostList from "./post/post-list.astro";
+
+const { currentPost } = Astro.props;
+const allPosts = await getCollection("blog");
+const similarityIndex = new SimilarityIndex();
+similarityIndex.indexPosts(allPosts);
+const similarPosts = similarityIndex.findSimilar(currentPost, 3);
+---
+
+{similarPosts.length > 0 && <PostList heading="Similar Posts" posts={similarPosts} />}

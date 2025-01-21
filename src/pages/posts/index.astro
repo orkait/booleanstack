@@ -1,9 +1,3 @@
 ---
-import Layout from "@components/layout.astro";
-import PostListing from "@components/post/post-list.astro";
-import { posts } from "@helpers";
+return Astro.rewrite("/")
 ---
-
-<Layout>
-    <PostListing posts={posts} />
-</Layout>

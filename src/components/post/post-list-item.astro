@@ -3,35 +3,75 @@ import type { CollectionEntry } from "astro:content";
 import DateTag from "@components/date-tag.astro";
 import Tag from "@components/tag.astro";
 
-type Props = {
+interface Props {
 	post: CollectionEntry<"blog">;
-};
+}
 
 const { post } = Astro.props;
+
+const coverImageUrl = post.data.cover ? `${post.data.cover}?w=800&q=80` : "/default-cover.jpg";
 ---
 
-<div class="flex flex-col gap-4">
-	{
-		post.slug && (
-			<a href={`/posts/${post.slug}`} target="_self">
-				<img
-					src={post.data.cover ? `${post.data.cover}?w=800&q=80` : ""}
-					alt="cover"
-					class="w-full aspect-video rounded-lg self-auto object-cover"
-				/>
-			</a>
-		)
-	}
-	<div class="flex flex-col gap-2">
-		<div class="flex gap-2">
-			<DateTag date={post.data.date} />
-			{post.data.tags?.map((tag) => <Tag tag={tag} />)}
-		</div>
-		<a href={`/posts/${post.slug}`} target="_self">
-			<h1 class="text-xl mb-0 font-title font-black">{post.data.title}</h1>
-		</a>
-		<a href={`/posts/${post.slug}`} target="_self">
-			<p class="text-sm">{post.data.description}</p>
+<article
+	class="group shadow-white border-[1px] relative overflow-hidden rounded-xl bg-white dark:bg-black shadow-sm hover:shadow-md"
+>
+	<div class="aspect-video overflow-hidden">
+		<a href={`/posts/${post.slug}`} class="no-underline" aria-label={`Read ${post.data.title}`}>
+			<img
+				src={coverImageUrl}
+				alt={post.data.title}
+				class="w-full h-full mt-0 object-cover transform group-hover:scale-105 transition-transform duration-500 ease-in-out"
+				loading="lazy"
+			/>
 		</a>
 	</div>
-</div>
+
+	<div class="p-6">
+		<div class="flex flex-wrap items-center mb-4">
+			<DateTag date={post.data.date} />
+		</div>
+
+		<a href={`/posts/${post.slug}`} class="no-underline" aria-label={`Read ${post.data.title}`}>
+			<h2
+				class="font-title font-bold text-xl text-gray-900 dark:text-gray-100 leading-tight mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
+			>
+				{post.data.title}
+			</h2>
+
+			{
+				post.data.description && (
+					<p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3">
+						{post.data.description}
+					</p>
+				)
+			}
+		</a>
+
+		<div
+			class="flex flex-wrap items-center mb-4 gap-2 child:rounded-full child:bg-orange-100 child:text-black child:no-underline"
+		>
+			{post.data.tags?.map((tag) => <Tag tag={tag} />)}
+		</div>
+
+		<a href={`/posts/${post.slug}`} class="no-underline" aria-label={`Read ${post.data.title}`}>
+			<div
+				class="absolute bottom-4 right-6
+                mt-4 flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium"
+			>
+				Read more
+				<svg
+					class="ml-2 w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-200"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+				</svg>
+			</div>
+		</a>
+	</div>
+</article>

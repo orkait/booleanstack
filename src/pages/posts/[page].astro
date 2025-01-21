@@ -1,0 +1,31 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "@components/layout.astro";
+import PostListing from "@components/post/post-list.astro";
+
+export async function getStaticPaths() {
+	const POSTS_PER_PAGE = 2;
+	const posts = await getCollection("blog"); // Moved inside the function
+	const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+	return Array.from({ length: totalPages }).map((_, i) => ({
+		params: { page: (i + 1).toString() },
+		props: {
+			posts: posts.slice(i * POSTS_PER_PAGE, (i + 1) * POSTS_PER_PAGE),
+			currentPage: i + 1,
+			totalPages,
+		},
+	}));
+}
+
+type Props = {
+	posts: CollectionEntry<"blog">[];
+	currentPage: number;
+	totalPages: number;
+};
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<Layout>
+	<PostListing hasPagination posts={posts} currentPage={currentPage} totalPages={totalPages} />
+</Layout>

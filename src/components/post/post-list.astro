@@ -4,13 +4,58 @@ import PostListItem from "./post-list-item.astro";
 
 type Props = {
 	posts: CollectionEntry<"blog">[];
+	hasPagination?: boolean;
+	currentPage?: number;
+	totalPages?: number;
+	heading?: string;
 };
 
-const { posts } = Astro.props;
+const { posts, currentPage = 1, totalPages = 1, heading } = Astro.props;
+
+// Function to get visible page numbers with ellipsis
+function getVisiblePages(current: number, total: number) {
+	if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
+
+	if (current <= 3) return [1, 2, 3, "...", total];
+	if (current >= total - 2) return [1, "...", total - 2, total - 1, total];
+
+	return [1, "...", current, "...", total];
+}
+
+const visiblePages = getVisiblePages(currentPage, totalPages);
 ---
 
-<div
-	class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-0 sm:gap-x-10 max-w-screen-lg mx-auto px-4 py-12 sm:px-8"
->
-	{(posts ?? []).map((post) => <PostListItem post={post} />)}
+<div>
+    <div class="prose max-w-screen-lg mx-auto px-4 my-4">
+        {heading && <h1>{heading}</h1>}
+    </div>
+	<div
+		class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-10 gap-x-0 sm:gap-x-10 max-w-screen-lg mx-auto px-4 "
+	>
+		
+		{(posts ?? []).map((post) => <PostListItem post={post} />)}
+	</div>
+
+	{
+		totalPages > 1 && (
+			<div class="flex justify-center mt-8 max-w-screen-lg mx-auto px-4 sm:px-8">
+				<div class="join">
+					{visiblePages.map((page) => {
+						if (page === "...") {
+							return <button class="join-item btn btn-disabled">...</button>;
+						}
+
+						return (
+							<a
+								href={`/posts/${page}`}
+								class={`join-item btn ${page === currentPage ? "btn-active" : ""}`}
+							>
+								{page}
+							</a>
+						);
+					})}
+				</div>
+			</div>
+		)
+	}
 </div>

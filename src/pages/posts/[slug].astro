@@ -6,6 +6,7 @@ import Tag from "@components/tag.astro";
 // MDX Components
 import DateTag from "@components/date-tag.astro";
 import PostContent from "@components/post/post-content.astro";
+import SimilarPosts from "@src/components/similar-posts.astro";
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -47,6 +48,8 @@ const { post } = Astro.props;
 	<div class="relative flex flex-col max-w-screen-lg mx-auto px-4">
 		<PostContent post={post} />
 	</div>
+
+	<SimilarPosts currentPost={post} />
 </Layout>
 
 <script>
