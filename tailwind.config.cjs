@@ -11,10 +11,7 @@ const darkThemeName = "dark";
 
 module.exports = {
 	darkMode: ["class", `[data-theme="${darkThemeName}"]`],
-	content: [
-        "./src/**/*.{astro,mdx,ts,tsx}",
-        "./src/components/canvas/BaseCanvas.tsx",
-    ],
+	content: ["./src/**/*.{astro,mdx,ts,tsx}", "./src/components/canvas/BaseCanvas.tsx"],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -28,21 +25,33 @@ module.exports = {
 		themes: [
 			{
 				light: {
-					...require("daisyui/src/theming/themes")["light"],
+					"color-scheme": "light",
+					primary: "#1eb854",
+					"primary-content": "#000000",
+					secondary: "oklch(69.71% 0.329 342.55)",
+					"secondary-content": "oklch(98.71% 0.0106 342.55)",
+					accent: "oklch(76.76% 0.184 183.61)",
+					neutral: "#2B3440",
+					"neutral-content": "#D7DDE4",
+					"base-100": "oklch(100% 0 0)",
+					"base-200": "#F2F2F2",
+					"base-300": "#E5E6E6",
+					"base-content": "#1f2937",
+					"--rounded-btn": "1.9rem",
+
 				},
 
 				dark: {
-					...require("daisyui/src/theming/themes")["forest"],
-					// "color-scheme": "dark",
-					// primary: "oklch(65.69% 0.196 275.75)",
-					// secondary: "oklch(74.8% 0.26 342.55)",
-					// accent: "oklch(74.51% 0.167 183.61)",
-					// neutral: "#2a323c",
-					// "neutral-content": "#A6ADBB",
+					"color-scheme": "dark",
+					primary: "#1eb854",
+					"primary-content": "#000000",
+					secondary: "#1DB88E",
+					accent: "#1DB8AB",
+					neutral: "#19362D",
+					"--rounded-btn": "1.9rem",
 					"base-100": "#0b0c0e",
 					"base-200": "#0d0f12",
 					"base-300": "#090A0C",
-					// "base-content": "#A6ADBB",
 				},
 			},
 		],

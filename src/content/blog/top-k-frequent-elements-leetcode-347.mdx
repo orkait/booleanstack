@@ -46,76 +46,77 @@ Given an array of numbers and an integer k, return the k most frequent elements.
 Let's explore different ways to solve this problem using various programming languages:
 
 <CodeTabs
-  tabs={{
+	isTabHeaderVisible={true}
+	tabs={{
     python: injectCode(`
-      from collections import Counter
-      import heapq
+	 from collections import Counter
+	 import heapq
 
-      def topKFrequent(nums, k):
-          # Count frequencies
-          count = Counter(nums)
+     def topKFrequent(nums, k):
+    	# Count frequencies
+    	count = Counter(nums)
 
-          # Keep k most frequent elements using min-heap
-          heap = []
-          for num, freq in count.items():
-              heapq.heappush(heap, (freq, num))
-              if len(heap) > k:
-                  heapq.heappop(heap)
+    	# Keep k most frequent elements using min-heap
+    	heap = []
+    	for num, freq in count.items():
+    	    heapq.heappush(heap, (freq, num))
+    	    if len(heap) > k:
+    		   heapq.heappop(heap)
 
-          # Extract results
-          return [num for freq, num in heap]
+    	# Extract results
+    	return [num for freq, num in heap]
     `),
 
     'c++': injectCode(`
-      class Solution {
-      public:
-          vector<int> topKFrequent(vector<int>& nums, int k) {
-              unordered_map<int, int> count;
-              for (int num : nums) {
-                  count[num]++;
-              }
+     class Solution {
+     public:
+    	vector<int> topKFrequent(vector<int>& nums, int k) {
+    	    unordered_map<int, int> count;
+    	    for (int num : nums) {
+    		   count[num]++;
+    	    }
 
-              priority_queue<pair<int, int>> pq;
-              for (auto& pair : count) {
-                  pq.push({pair.second, pair.first});
-              }
+    	    priority_queue<pair<int, int>> pq;
+    	    for (auto& pair : count) {
+    		   pq.push({pair.second, pair.first});
+    	    }
 
-              vector<int> result;
-              while (k--) {
-                  result.push_back(pq.top().second);
-                  pq.pop();
-              }
-              return result;
-          }
-      };
+    	    vector<int> result;
+    	    while (k--) {
+    		   result.push_back(pq.top().second);
+    		   pq.pop();
+    	    }
+    	    return result;
+    	}
+     };
     `),
 
     java: injectCode(`
-      import java.util.HashMap;
-      import java.util.Map;
-      import java.util.PriorityQueue;
+     import java.util.HashMap;
+     import java.util.Map;
+     import java.util.PriorityQueue;
 
-      class Solution {
-          public int[] topKFrequent(int[] nums, int k) {
-              Map<Integer, Integer> count = new HashMap<>();
-              for (int num : nums) {
-                  count.put(num, count.getOrDefault(num, 0) + 1);
-              }
+     class Solution {
+    	public int[] topKFrequent(int[] nums, int k) {
+    	    Map<Integer, Integer> count = new HashMap<>();
+    	    for (int num : nums) {
+    		   count.put(num, count.getOrDefault(num, 0) + 1);
+    	    }
 
-              PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
-              for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
-                  pq.offer(new int[] {
-                          entry.getKey(), entry.getValue()
-                  });
-              }
+    	    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+    	    for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+    		   pq.offer(new int[] {
+    				 entry.getKey(), entry.getValue()
+    		   });
+    	    }
 
-              int[] result = new int[k];
-              for (int i = 0; i < k; i++) {
-                  result[i] = pq.poll()[0];
-              }
-              return result;
-          }
-      }
+    	    int[] result = new int[k];
+    	    for (int i = 0; i < k; i++) {
+    		   result[i] = pq.poll()[0];
+    	    }
+    	    return result;
+    	}
+     }
     `)
 
 }}
@@ -145,16 +146,16 @@ Input: `nums = [1,1,1,2,2,3]`, `k = 2`
 
 Let's analyze the efficiency of our solution:
 
-- **Time Complexity**: O(n log k)
+-   **Time Complexity**: O(n log k)
 
-    - Counting frequencies: O(n)
-    - Heap operations: O(log k) for each unique number
-    - Where n is the length of input array
+    -   Counting frequencies: O(n)
+    -   Heap operations: O(log k) for each unique number
+    -   Where n is the length of input array
 
-- **Space Complexity**: O(n)
-    - HashMap to store frequencies: O(n)
-    - Heap to store k elements: O(k)
-    - Since k ≤ n, overall space is O(n)
+-   **Space Complexity**: O(n)
+    -   HashMap to store frequencies: O(n)
+    -   Heap to store k elements: O(k)
+    -   Since k ≤ n, overall space is O(n)
 
 ## Real-World Applications
 
