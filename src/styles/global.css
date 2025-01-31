@@ -34,7 +34,8 @@ svg.rough-annotation {
 	opacity: 70%;
 }
 
-.code-tabs {
+.code-tabs,
+.astro-code:not([data-key="visible"]) {
 	border: 1px solid #ddd;
 	border-radius: 6px;
 	overflow: hidden;
@@ -93,7 +94,11 @@ svg.rough-annotation {
 	padding-bottom: 50px;
 }
 
-
 [data-notion-identity="notion"][data-notion-type="highlight"][data-notion-color="yellow"] {
 	@apply dark:text-black;
 }
+
+/* class="astro-code ayu-dark m-0 rounded-none" where data-key is not "visible" */
+/* .astro-code:not([data-key="visible"]) {
+    @apply m-0 rounded-none;
+} */

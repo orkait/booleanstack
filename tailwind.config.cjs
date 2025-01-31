@@ -50,6 +50,7 @@ module.exports = {
 					neutral: "#19362D",
 					"--rounded-btn": "1.9rem",
 					"base-100": "#0b0c0e",
+                    "base-content": "#D7DDE4",
 					"base-200": "#0d0f12",
 					"base-300": "#090A0C",
 				},

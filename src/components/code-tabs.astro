@@ -41,7 +41,7 @@ const { isTabHeaderVisible = true } = Astro.props;
 						role="tab"
 						class:list={[
 							index === 0 ? "tab tab-active" : "tab",
-							"rounded-none text-base-content",
+							"rounded-none text-base-100 dark:text-base-content",
 						]}
 						data-lang={lang}
 					>
@@ -65,6 +65,7 @@ const { isTabHeaderVisible = true } = Astro.props;
 						data-lang={lang}
 					>
 						<Code
+                            data-key="visible"
 							class="m-0 rounded-none"
 							theme="ayu-dark"
 							lang={lang as any}
