@@ -88,8 +88,12 @@ svg.rough-annotation {
 	@apply p-0 rounded-lg;
 }
 
+.footer {
+	row-gap: 0.5rem;
+	padding-bottom: 50px;
+}
 
-.footer{
-    row-gap: 0.5rem;
-    padding-bottom: 50px;
+
+[data-notion-identity="notion"][data-notion-type="highlight"][data-notion-color="yellow"] {
+	@apply dark:text-black;
 }

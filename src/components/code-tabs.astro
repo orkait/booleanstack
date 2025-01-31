@@ -2,8 +2,6 @@
 const { tabs, componentId = crypto.randomUUID() } = Astro.props;
 import { Code } from "astro:components";
 const { isTabHeaderVisible = true } = Astro.props;
-
-
 ---
 
 <div class="code-tabs mt-1" id={componentId}>
@@ -14,10 +12,7 @@ const { isTabHeaderVisible = true } = Astro.props;
 				role="tablist"
 				class="relative tabs tabs-sm tabs-boxed rounded-none text-sm bg-[#0c0e13]"
 			>
-				<div
-					onclick="copyToClipboard"
-					class="absolute top-2 right-2 text-primary z-10 select-none"
-				>
+				<div id="copyButton" class="absolute top-2 right-2 text-primary z-10 select-none">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="20"
@@ -33,11 +28,21 @@ const { isTabHeaderVisible = true } = Astro.props;
 						<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
 						<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
 					</svg>
+					<span
+						id="copyText"
+						class="hidden absolute top-0 right-0 rounded-full bg-primary text-primary-content px-2 py-1 text-xs"
+					>
+						Copied!
+					</span>
 				</div>
+
 				{Object.keys(tabs).map((lang, index) => (
 					<div
 						role="tab"
-						class:list={[index === 0 ? "tab tab-active" : "tab", "rounded-none"]}
+						class:list={[
+							index === 0 ? "tab tab-active" : "tab",
+							"rounded-none text-base-content",
+						]}
 						data-lang={lang}
 					>
 						{lang}
@@ -110,5 +115,26 @@ const { isTabHeaderVisible = true } = Astro.props;
 		tabButtons.forEach((btn) => {
 			btn.addEventListener("click", () => activateTab(btn.dataset.lang));
 		});
+
+		function copyToClipboard() {
+            const activeTabIndex = Array.from(tabButtons).findIndex((btn) => btn.classList.contains("tab-active"));
+			const textToCopy = codeBlocks[activeTabIndex].querySelector("code").innerText;
+			navigator.clipboard
+				.writeText(textToCopy)
+				.then(() => {
+					const copyText = document.getElementById("copyText");
+					copyText.classList.remove("hidden");
+					setTimeout(() => {
+						copyText.classList.add("hidden");
+					}, 1000);
+				})
+				.catch((err) => {
+					console.error("Failed to copy: ", err);
+				});
+		}
+
+        
+
+		document.getElementById("copyButton").addEventListener("click", copyToClipboard);
 	})();
 </script>
