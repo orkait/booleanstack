@@ -65,9 +65,15 @@ importers:
       astro-lazy-youtube-embed:
         specifier: ^0.5.4
         version: 0.5.4(astro@4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3))
+      astro-og-canvas:
+        specifier: ^0.7.0
+        version: 0.7.0(astro@4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3))
       astro-tweet:
         specifier: ^0.0.4
         version: 0.0.4(astro@4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3))(prettier-plugin-astro@0.13.0)(prettier@3.5.2)
+      canvaskit-wasm:
+        specifier: ^0.39.1
+        version: 0.39.1
       daisyui:
         specifier: ^4.12.23
         version: 4.12.23(postcss@8.5.3)
@@ -1366,6 +1372,9 @@ packages:
   '@vueuse/shared@10.11.1':
     resolution: {integrity: sha512-LHpC8711VFZlDaYUXEBbFBCQ7GS3dVU9mjOhhMhXP6txTV4EhYQg/KGnQuvt/sPAtoUKq7VVUnL6mVtFoL42sA==}
 
+  '@webgpu/types@0.1.21':
+    resolution: {integrity: sha512-pUrWq3V5PiSGFLeLxoGqReTZmiiXwY3jRkIG5sLLKjyqNxrwm/04b4nw7LSmGWJcKk59XOM/YRTUwOzo4MMlow==}
+
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -1451,6 +1460,12 @@ packages:
     resolution: {integrity: sha512-6Nd52ndiC7qM9jBC2/iAVsgbGMLBEHo0NfyECTyvsoKlei5Crl8S279Y8QhbKei+L6/FPSIijRV+ztY9/Pd3Wg==}
     peerDependencies:
       astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta || ^5.0.0-beta
+
+  astro-og-canvas@0.7.0:
+    resolution: {integrity: sha512-aamARDNDORPxXlPt+VJakzj4WpNUDjQqUZ06eE82pGMad4aTR/KMm8Ho12qvprgJcM8K7fgSOMg5OHa7KcX0pw==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      astro: ^3.0.0 || ^4.0.0 || ^5.0.0
 
   astro-tweet@0.0.4:
     resolution: {integrity: sha512-D4rpm8r2AiDeY2L+wee1+smVojLd0Qd114NqO4uuczWh4R0hbJTwgd4fpyGp87M6SmF1g85d5QejxLzLjGn3rw==}
@@ -1547,6 +1562,9 @@ packages:
 
   caniuse-lite@1.0.30001700:
     resolution: {integrity: sha512-2S6XIXwaE7K7erT8dY+kLQcpa5ms63XlRkMkReXjle+kf6c5g38vyMl+Z5y8dSxOFDhcFe+nxnn261PLxBSQsQ==}
+
+  canvaskit-wasm@0.39.1:
+    resolution: {integrity: sha512-Gy3lCmhUdKq+8bvDrs9t8+qf7RvcjuQn+we7vTVVyqgOVO1UVfHpsnBxkTZw+R4ApEJ3D5fKySl9TU11hmjl/A==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -5161,6 +5179,8 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
+  '@webgpu/types@0.1.21': {}
+
   acorn-jsx@5.3.2(acorn@8.14.0):
     dependencies:
       acorn: 8.14.0
@@ -5255,6 +5275,13 @@ snapshots:
   astro-lazy-youtube-embed@0.5.4(astro@4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3)):
     dependencies:
       astro: 4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3)
+
+  astro-og-canvas@0.7.0(astro@4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3)):
+    dependencies:
+      astro: 4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3)
+      canvaskit-wasm: 0.39.1
+      deterministic-object-hash: 2.0.2
+      entities: 4.5.0
 
   astro-tweet@0.0.4(astro@4.16.18(@types/node@18.19.76)(rollup@4.34.8)(typescript@5.7.3))(prettier-plugin-astro@0.13.0)(prettier@3.5.2):
     dependencies:
@@ -5432,6 +5459,10 @@ snapshots:
   camelcase@8.0.0: {}
 
   caniuse-lite@1.0.30001700: {}
+
+  canvaskit-wasm@0.39.1:
+    dependencies:
+      '@webgpu/types': 0.1.21
 
   ccount@2.0.1: {}
 
