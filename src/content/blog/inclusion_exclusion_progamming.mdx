@@ -1,0 +1,245 @@
+---
+title: "Inclusion-Exclusion Principle (IEP)"
+description: "A deep dive into the Inclusion-Exclusion Principle (IEP) in competitive programming with examples of 2-way, 3-way, and 4-way applications."
+date: "2024-06-01"
+tags: ["combinatorics", "competitive programming", "inclusion-exclusion"]
+cover: "https://i.imgur.com/tk26cxr.jpeg"
+author: "Kailas Mahavarkar"
+authorLinkedIn: "https://www.linkedin.com/in/kailasmahavarkar/"
+---
+
+import IEPVisualization from "@components/examples/inclusion_exclusion_principle";
+import { injectCode } from "@src/utils/blog-utils";
+import { YouTube } from "astro-embed";
+
+# Inclusion-Exclusion Principle in Competitive Programming
+
+The **Inclusion-Exclusion Principle (IEP)** is a fundamental combinatorial technique frequently used in **competitive programming** to efficiently count elements satisfying at least one condition. This principle is particularly useful when direct iteration is inefficient due to a large input size.
+
+<Notation type="box" color="red">
+	**Core Idea:** Imagine counting people at a party. If some individuals belong to multiple friend
+	circles, they might be counted more than once. The Inclusion-Exclusion Principle helps correct
+	this by subtracting overlaps, ensuring each person is counted only once.
+</Notation>
+
+---
+
+## Understanding IEP with a Two-Way Venn Diagram
+
+Given two sets:
+
+- **S₂**: Contains numbers divisible by 2.
+- **S₃**: Contains numbers divisible by 3.
+
+We need to determine how many numbers in the range `[1, N]` are divisible by **either 2 or 3**.
+
+<CodeTabs
+    isTabHeaderVisible={false}
+    tabs={{
+        python: injectCode(`
+            N = 20
+            S2 = {2, 4,  6,  8, 10, 12, 14, 16, 18, 20}   <-- Multiples of 2
+            S3 = {3, 6,  9, 12, 15, 18}                   <-- Multiples of 3
+            S2 ∩ S3 = {6, 12, 18}                         <-- Common multiples (LCM(2,3) = 6)
+
+            Formula:
+            |S₂ ∪ S₃| = |S₂| + |S₃| - |S₂ ∩ S₃|
+
+            Calculations:
+            |S2| = floor(20 / 2) = 10
+            |S3| = floor(20 / 3) = 6
+            |S2 ∩ S3| = floor(20 / 6) = 3   <-- Multiples of LCM(2,3)
+
+            Result:
+            |S₂ ∪ S₃| = 10 + 6 - 3 = 13
+        `)
+    }}
+
+/>
+
+### **Why Does This Work?**
+
+<SingleImg shouldContain width="50%" src="https://i.imgur.com/XUwAeoo.png" />- **|A|** is counted
+once. - **|B|** is counted once. - **|A ∩ B|** is counted twice, so we subtract it once. - This
+adjustment gives us the correct count.
+
+---
+
+## Interactive Visualization of the Inclusion-Exclusion Principle
+
+<IEPVisualization client:load="true" />
+
+---
+
+## **Extending to Three-Way IEP**
+
+We can expand this principle for three sets:
+
+<MathBlock tex={`|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|`} />
+
+If we apply the same logic, the pattern continues as we introduce more sets.
+
+---
+
+## **IEP for Four-Way Venn Diagram**
+
+<SingleImg 
+class="bg-white"
+shouldContain src="https://i.imgur.com/ZPm6qJO.png" />
+
+Applying four-way Inclusion-Exclusion:
+
+<CodeTabs
+	isTabHeaderVisible={false}
+	tabs={{
+		python: injectCode(`
+        4-way IEP |A ∪ B ∪ C ∪ D| = 
+            +   (|A| + |B| + |C| + |D|)
+            -   (|A ∩ B| + |A ∩ C| + |A ∩ D| + |B ∩ C| + |B ∩ D| + |C ∩ D|)
+            +   (|A ∩ B ∩ C| + |A ∩ B ∩ D| + |A ∩ C ∩ D| + |B ∩ C ∩ D|)
+            -   |A ∩ B ∩ C ∩ D|
+        `),
+	}}
+/>
+
+**The pattern of + and - signs continues similarly for five-way, six-way, and beyond.**
+
+For a **five-way set union**, the formula expands further:
+
+<CodeTabs
+	isTabHeaderVisible={false}
+	tabs={{
+		python: injectCode(`
+        5-way IEP |A ∪ B ∪ C ∪ D ∪ E| = 
+            +   (
+                    |A| + |B| + |C| + |D| + |E|
+                )
+            -   (
+                    |A ∩ B| + |A ∩ C| + |A ∩ D| + |A ∩ E| +
+                    |B ∩ C| + |B ∩ D| + |B ∩ E| + |C ∩ D| +
+                    |C ∩ E| + |D ∩ E|
+                )
+            +   (
+                    |A ∩ B ∩ C| + |A ∩ B ∩ D| + |A ∩ B ∩ E| + |A ∩ C ∩ D| + 
+                    |A ∩ C ∩ E| + |A ∩ D ∩ E| + |B ∩ C ∩ D| + |B ∩ C ∩ E| + 
+                    |B ∩ D ∩ E| + |C ∩ D ∩ E|
+                )
+            -   (
+                    |A ∩ B ∩ C ∩ D| + |A ∩ B ∩ C ∩ E| + |A ∩ B ∩ D ∩ E| + 
+                    |A ∩ C ∩ D ∩ E| + |B ∩ C ∩ D ∩ E|
+                )
+            +   (
+                    |A ∩ B ∩ C ∩ D ∩ E|
+                )
+        `),
+	}}
+/>
+---
+
+## Applying IEP in a Competitive Programming Problem:
+
+<Paper>
+	### **Problem Statement (A) Insomnia Cure** 
+    One dragon 🐉. Two dragons 🐉🐉. Three dragons
+	🐉🐉🐉... — the princess 👸 was counting. She had trouble falling asleep 😴, and she got bored
+	of counting lambs 🐑 when she was nine. However, just counting dragons was boring as well, so
+	she entertained herself as best she could. Tonight she imagined that all dragons were here to
+	steal her 🏰, and she was fighting them off. Every k-th dragon got punched in the face with a
+	frying pan 🍳. Every l-th dragon got his tail shut into the balcony door 🚪. Every m-th dragon
+	got his paws trampled with sharp heels 👠. Finally, she threatened every n-th dragon to call her
+	mom 📞, and he withdrew in panic 😨. How many imaginary dragons suffered moral or physical
+	damage tonight, if the princess counted a total of d dragons? 🐉💥
+</Paper>
+
+#### **Input:**
+
+```cpp
+k1 = 2  (punched every 2 days)
+k2 = 3  (punched every 3 days)
+N = 12
+```
+
+#### **Affected Days:**
+
+```cpp
+{2, 3, 4, 6, 8, 9, 10, 12}
+```
+
+#### **Output:**
+
+```cpp
+8
+```
+
+#### **Approach:**
+
+- **Brute Force:** Iterate over all dragons and check if they are affected by any of the princess's actions.
+- **Optimized:** Use the IEP to count the dragons affected by at least one action.
+
+### **Dry Run:**
+
+- **Affected Days:** `{2, 3, 4, 6, 8, 9, 10, 12}`
+- **Affected by k:** `{2, 4, 6, 8, 10, 12}`
+- **Affected by l:** `{3, 6, 9, 12}`
+
+- **Affected by k and l:** `{6, 12}`
+- **Affected by k or l:** `{2, 3, 4, 6, 8, 9, 10, 12}`
+- **Affected by k or l:** `8`
+
+### **Implementation:** 
+
+<CodeTabs
+    tabLabels={["Brute Force", "Optimized"]}
+    tabs={{
+        'cpp-bruteforce': injectCode(`
+
+            // Brute Force Approach
+            class SolutionBruteForce {
+                public:
+                int solve(int k, int l, int m, int n, int d) {
+                    if (k == 1 || l == 1 || m == 1 || n == 1) {
+                        return d;
+                    }
+
+                    if (min({k, l, m, n}) > d) {
+                        return 0;
+                    }
+
+                    int count = 0;
+                    for (int i = 1; i <= d; i++) {
+                        if (i % k == 0 || i % l == 0 || i % m == 0 || i % n == 0) {
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+            };
+        `),
+        "cpp-optimal": injectCode(`
+            // Optimized Approach
+            class Solution {
+                public:
+                int gcd(int a, int b) {
+                    if (b == 0) return a;
+                    return gcd(b, a % b);
+                }
+
+                int lcm(int a, int b) {
+                    return (a / gcd(a, b)) * b;
+                }
+
+                int solve(int k, int l, int m, int n, int d) {
+                    int A1 = (d / k) + (d / l) + (d / m) + (d / n);
+                    int A2 = (d / lcm(k, l)) + (d / lcm(k, m)) + (d / lcm(k, n)) +
+                            (d / lcm(l, m)) + (d / lcm(l, n)) + (d / lcm(m, n));
+                    int A3 = (d / lcm(lcm(k, l), m)) + (d / lcm(lcm(k, l), n)) +
+                            (d / lcm(lcm(k, m), n)) + (d / lcm(lcm(l, m), n));
+                    int A4 = d / lcm(lcm(k, l), lcm(m, n));
+
+                    return A1 - A2 + A3 - A4;
+                }
+            };    
+        `) 
+    }}
+
+/>

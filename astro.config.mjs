@@ -25,8 +25,21 @@ export default defineConfig({
 		mdx({
 			syntaxHighlight: "shiki",
 			shikiConfig: {
-				theme: "houston",
-				langs: ["cpp", "java", "python", "mdx", "javascript", "typescript", "json", "html", "css", "xml", "yaml", "markdown"],
+				theme: "ayu-dark",
+				langs: [
+					"cpp",
+					"java",
+					"python",
+					"mdx",
+					"javascript",
+					"typescript",
+					"json",
+					"html",
+					"css",
+					"xml",
+					"yaml",
+					"markdown",
+				],
 			},
 			remarkPlugins: [remarkMath],
 			rehypePlugins: [rehypeKatex, rehypePresetMinify],

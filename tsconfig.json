@@ -5,14 +5,14 @@
 		"jsx": "preserve",
 		"jsxImportSource": "react",
 		"verbatimModuleSyntax": true,
+		"esModuleInterop": true,
 		"paths": {
 			"@src/*": ["./src/*"],
 			"@components/*": ["./src/components/*"],
 			"@styles/*": ["./src/styles/*"],
-            "@mdx/*": ["./src/components/mdx/*"],
-            "@helpers": ["./src/helpers/index.ts"],
-            "@helpers/*": ["./src/helpers/*"],
-
+			"@mdx/*": ["./src/components/mdx/*"],
+			"@helpers": ["./src/helpers/index.ts"],
+			"@helpers/*": ["./src/helpers/*"]
 		},
 		"baseUrl": "./"
 	},

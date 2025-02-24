@@ -41,6 +41,7 @@ module.exports = {
 					// "neutral-content": "#A6ADBB",
 					"base-100": "#0b0c0e",
 					"base-200": "#0d0f12",
+                    "base-content": "#D7DDE4",
 					"base-300": "#090A0C",
 					// "base-content": "#A6ADBB",
 				},

@@ -1,0 +1,13 @@
+---
+import katex from "katex";
+import "katex/dist/katex.min.css";
+
+const { tex, display = true } = Astro.props;
+
+const html = katex.renderToString(tex, {
+	displayMode: display,
+	throwOnError: false,
+});
+---
+
+<p class={`math-block inline ${display ? "" : "hidden"}`} set:html={html} />
