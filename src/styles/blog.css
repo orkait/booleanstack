@@ -51,5 +51,15 @@ img[src="/resource_unavailable.svg"] {
 }
 
 .single-img {
-	@apply rounded-md dark:border-transparent border-[1px] mt-4 mb-4 ;
+	@apply rounded-md dark:border-transparent border-[1px] mt-4 mb-4;
 }
+
+.prose :where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply my-0;
+}
+
+.old-paper > .prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)),
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+	@apply mt-0 text-black;
+}
+

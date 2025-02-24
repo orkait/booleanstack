@@ -34,7 +34,8 @@ svg.rough-annotation {
 	opacity: 70%;
 }
 
-.code-tabs {
+.code-tabs,
+.astro-code:not([data-key="visible"]) {
 	border: 1px solid #ddd;
 	border-radius: 6px;
 	overflow: hidden;
@@ -88,8 +89,7 @@ svg.rough-annotation {
 	@apply p-0 rounded-lg;
 }
 
-
-.footer{
-    row-gap: 0.5rem;
-    padding-bottom: 50px;
+.footer {
+	row-gap: 0.5rem;
+	padding-bottom: 50px;
 }
