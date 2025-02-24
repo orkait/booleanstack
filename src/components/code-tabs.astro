@@ -1,31 +1,84 @@
 ---
 const { tabs, componentId = crypto.randomUUID() } = Astro.props;
 import { Code } from "astro:components";
+const { isTabHeaderVisible = true } = Astro.props;
 ---
 
 <div class="code-tabs mt-1" id={componentId}>
 	<!-- Tab Buttons -->
-	<div role="tablist" class="tabs tabs-boxed bg-transparent">
-		{
-			Object.keys(tabs).map((lang, index) => (
-				<div role="tab" class={index === 0 ? "tab tab-active" : "tab"} data-lang={lang}>
-					{lang}
+	{
+		isTabHeaderVisible && (
+			<div
+				role="tablist"
+				class="relative tabs tabs-sm tabs-boxed rounded-none text-sm bg-[#0c0e13]"
+			>
+				<div id="copyButton" class="absolute top-2 right-2 text-primary z-10 select-none">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-copy text-white opacity-50 hover:opacity-100 cursor-pointer"
+					>
+						<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+						<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+					</svg>
+					<span
+						id="copyText"
+						class="hidden absolute top-0 right-0 rounded-full bg-primary text-primary-content px-2 py-1 text-xs"
+					>
+						Copied!
+					</span>
 				</div>
-			))
-		}
-	</div>
+
+				{Object.keys(tabs).map((lang, index) => (
+					<div
+						role="tab"
+						class:list={[
+							index === 0 ? "tab tab-active" : "tab",
+							"rounded-none text-base-100 dark:text-base-content",
+						]}
+						data-lang={lang}
+					>
+						{lang}
+					</div>
+				))}
+			</div>
+		)
+	}
 
 	<!-- Code Snippets -->
-	<div>
+	<div class="relative">
 		{
-			Object.entries(tabs).map(([lang, code], index) => (
-				<div
-					class={index === 0 ? "code-block tab-active" : "code-block hidden"}
-					data-lang={lang}
-				>
-					<Code class="m-0" theme="ayu-dark" lang={lang as any} code={code as any} />
-				</div>
-			))
+			Object.entries(tabs).map(([lang, code], index) => {
+                const langHasDelimiter = lang.includes("-");
+                const langResolved = langHasDelimiter ? lang.split("-")[0] : lang;
+
+				return (
+					<>
+						<div
+							class:list={[
+								index === 0 ? "code-block tab-active" : "code-block hidden",
+								"rounded-none",
+							]}
+							data-lang={lang}
+						>
+							<Code
+								data-key="visible"
+								class="m-0 rounded-none"
+								theme="ayu-dark"
+								lang={langResolved as any}
+								code={code as any}
+							/>
+						</div>
+					</>
+				);
+			})
 		}
 	</div>
 </div>
@@ -68,5 +121,26 @@ import { Code } from "astro:components";
 		tabButtons.forEach((btn) => {
 			btn.addEventListener("click", () => activateTab(btn.dataset.lang));
 		});
+
+		function copyToClipboard() {
+			const activeTabIndex = Array.from(tabButtons).findIndex((btn) =>
+				btn.classList.contains("tab-active")
+			);
+			const textToCopy = codeBlocks[activeTabIndex].querySelector("code").innerText;
+			navigator.clipboard
+				.writeText(textToCopy)
+				.then(() => {
+					const copyText = document.getElementById("copyText");
+					copyText.classList.remove("hidden");
+					setTimeout(() => {
+						copyText.classList.add("hidden");
+					}, 1000);
+				})
+				.catch((err) => {
+					console.error("Failed to copy: ", err);
+				});
+		}
+
+		document.getElementById("copyButton").addEventListener("click", copyToClipboard);
 	})();
 </script>
