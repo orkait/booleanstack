@@ -30,6 +30,7 @@
 		"astro": "^4.8.6",
 		"astro-embed": "^0.9.0",
 		"astro-lazy-youtube-embed": "^0.5.4",
+		"astro-og-canvas": "^0.7.0",
 		"astro-tweet": "^0.0.4",
 		"daisyui": "^4.12.23",
 		"eslint": "^9.3.0",
