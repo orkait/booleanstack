@@ -1,5 +1,4 @@
 ---
-import Tweet from "astro-tweet";
 import { type CollectionEntry } from "astro:content";
 
 // MDX Components
@@ -31,6 +30,9 @@ import Tr from "@mdx/tr.astro";
 import Ul from "@mdx/ul.astro";
 import SingleImg from "@mdx/single-img.astro";
 import DataTable from "@mdx/data-table.astro";
+import MathBlock from "@mdx/math-block.astro";
+import CodeTabs from "../code-tabs.astro";
+import Paper from "../mdx/paper.astro";
 
 type Props = {
 	post: CollectionEntry<"blog">;
@@ -70,8 +72,10 @@ const { Content } = await post.render();
 		Box,
 		Notation,
 		N: Notation,
-		Tweet,
 		SingleImg,
 		DataTable,
+        MathBlock,
+        CodeTabs,
+        Paper
 	}}
 />
