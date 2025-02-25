@@ -12,10 +12,12 @@
 			"@styles/*": ["./src/styles/*"],
 			"@mdx/*": ["./src/components/mdx/*"],
 			"@helpers": ["./src/helpers/index.ts"],
-			"@helpers/*": ["./src/helpers/*"]
+			"@helpers/*": ["./src/helpers/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@env": ["./env.ts"]
 		},
 		"baseUrl": "./"
 	},
-	"include": ["src"],
+	"include": ["src", "opengraph/prng.ts"],
 	"exclude": ["dist"]
 }

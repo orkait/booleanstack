@@ -4,6 +4,9 @@ import "@styles/global.css";
 import "@styles/blog.css";
 import { GOOGLE_GTAG } from "@src/config";
 import { ViewTransitions } from "astro:transitions";
+import { prngXorShift } from "@utils/prng";
+import { GET_ENDPOINT } from "@env";
+import { file } from "astro/loaders";
 
 export interface Props {
 	title: string;
@@ -12,6 +15,10 @@ export interface Props {
 
 const { title, description } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const postTitle = Astro.url.pathname.split("/")?.pop() || "logo";
+const fileHash = prngXorShift(postTitle);
+
+const ENDPOINT = GET_ENDPOINT(import.meta.env.PROD ? "PROD" : ("DEV" as any));
 ---
 
 <!-- Global Metadata -->
@@ -62,6 +69,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 
-<meta property="og:image" content={`https://booleanstack.com/og/${Astro.url.pathname}.png`} />
+<meta property="og:image" content={`${ENDPOINT}/og/${fileHash}.jpg`} />
 
 <ViewTransitions />

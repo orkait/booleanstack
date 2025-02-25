@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # Vercel
 .vercel
+
+
+opengraph/__pycache__/
+__pycache__/**

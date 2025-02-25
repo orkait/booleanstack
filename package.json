@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-		"dev": "astro dev",
-		"build": "astro check && astro build",
+		"dev": "astro dev --mode dev",
+		"build": "astro check && astro build --mode prod",
 		"preview": "astro preview",
 		"check": "astro check"
 	},
