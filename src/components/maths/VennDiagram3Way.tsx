@@ -22,8 +22,7 @@ const VennDiagram3Way = ({
             <TeX math="|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|" />
             <TeX math={`|A \\cup B \\cup C| = {set1} + {set2} + {set3} - {int12} - {int13} - {int23} + {int123} = {threeSetUnion}`} />
         </div>
-    ),
-    ...rest
+    )
 }) => {
     const [set1, setSet1] = React.useState(set1_default)
     const [set2, setSet2] = React.useState(set2_default)
@@ -41,7 +40,7 @@ const VennDiagram3Way = ({
 
     return (
         <>
-            <div className="space-y-6 " >
+            <div className="space-y-6">
                 <div className="grid grid-cols-3 gap-4">
                     {[
                         { label: 'Set 1 Size', value: set1, setter: setSet1 },

@@ -69,7 +69,6 @@ const IEPVisualization = () => {
                             int13_default={1}
                             int23_default={3}
                             int123_default={1}
-                            className="bg-red-500"
                             renderExplanation={(threeSetUnion, set1, set2, set3, int12, int13, int23, int123) => (
                                 <>
                                     <div className="flex flex-col ml-5">
