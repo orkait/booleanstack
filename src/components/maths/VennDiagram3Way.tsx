@@ -40,7 +40,7 @@ const VennDiagram3Way = ({
 
     return (
         <>
-            <div className="space-y-6 ">
+            <div className="space-y-6">
                 <div className="grid grid-cols-3 gap-4">
                     {[
                         { label: 'Set 1 Size', value: set1, setter: setSet1 },
@@ -106,7 +106,7 @@ const VennDiagram3Way = ({
                     ))}
                 </div>
 
-                <div className="flex flex-col items-center justify-center  ">
+                <div className="flex flex-col items-center justify-center dark:bg-white dark:text-black dark:rounded-md ">
                     {/* Venn Diagram Container */}
                     <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto p-4 ">
                         <div className="w-full aspect-square max-w-[500px]">

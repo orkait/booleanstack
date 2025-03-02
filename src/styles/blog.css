@@ -62,4 +62,3 @@ img[src="/resource_unavailable.svg"] {
 .prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
 	@apply mt-0 text-black;
 }
-

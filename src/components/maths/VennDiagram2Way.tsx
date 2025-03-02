@@ -52,7 +52,7 @@ const VennDiagram2Way = ({
                 </div>
             </div>
 
-            <div className="relative h-64 border rounded-lg p-4">
+            <div className="relative h-64 border rounded-lg p-4 dark:bg-white dark:text-black">
                 <svg viewBox="0 0 400 200" className="w-full h-full">
                     <circle
                         cx="150"
