@@ -10,7 +10,8 @@ const VennDiagram2Way = ({
             <TeX math="|A \cup B| = |A| + |B| - |A \cap B|" />
             <TeX math={`|A \\cup B| = {setA} + {setB} - {intersection} = {twoSetUnion}`} />
         </div>
-    )
+    ),
+    ...rest
 }) => {
     const [setA, setSetA] = React.useState(set_a_default)
     const [setB, setSetB] = React.useState(set_b_default)
@@ -18,7 +19,7 @@ const VennDiagram2Way = ({
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4" {...rest}>
                 <div>
                     <label className="block text-sm font-medium mb-1">Set A Size</label>
                     <input
@@ -52,7 +53,7 @@ const VennDiagram2Way = ({
                 </div>
             </div>
 
-            <div className="relative h-64 border rounded-lg p-4">
+            <div className="relative h-64 border rounded-lg p-4 dark:bg-white dark:text-black">
                 <svg viewBox="0 0 400 200" className="w-full h-full">
                     <circle
                         cx="150"
