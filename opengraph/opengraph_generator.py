@@ -153,8 +153,10 @@ def og_generator():
 
     # download image locally in a cache folder
     for key, value in ogMap.items():
+        image_name = os.path.join(CACHE_DIR, value['hash'] + '.jpg')
+
         # check if image already exists in cache if not download it
-        if os.path.exists(os.path.join(CACHE_DIR, value['hash'] + '.jpg')):
+        if os.path.exists(image_name):
             print(f"{key} already has skipping upload")
             continue
 
@@ -162,32 +164,22 @@ def og_generator():
         download_image(value['imageURL'], CACHE_DIR, value['hash'] + '.jpg')
         time.sleep(0.6)
 
-    # post process the image to be used in the og:image tag
-    # make sure the image is 1200x630 and less than 300KB in size
-    # if not then resize the image and compress it to be used in the og:image tag
-    postProcessImages = getFiles(
-        allowedExtensions=['jpg'],
-        rootPath=CACHE_DIR,
-        cacheIgnoreNames=['.git', '__pycache__']
-    )
 
-    for image in postProcessImages:
-        image_path = image['fpath']
-
+        # resize and optimize the image
         resize_and_optimize_image(
-            image_path,
-            image_path,
+            image_name,
+            image_name,
             desired_width=1200,
             desired_height=630,
             max_size_kb=300
         )
 
+        # blur the edges of the image
         blur_edges(
-            image_path,
-            image_path,
+            image_name,
+            image_name,
             blur_radius=1.4
         )
-
 
 if __name__ == '__main__':
     og_generator()
