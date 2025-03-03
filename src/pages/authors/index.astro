@@ -1,15 +1,15 @@
 ---
 import Layout from "@components/layout.astro";
-import SlugList from "@components/slug-list.astro";
-import { posts, authors } from "@helpers";
+import { posts } from "@helpers";
 import AuthorList from "@src/components/post/author-list.astro";
 ---
 
 <Layout>
-	<SlugList slugs={authors} generateLink={(slug) => `/author/${encodeURI(slug)}`} />
 	<AuthorList
 		authors={posts.map((post) => post.data.author)}
-		authorLinkedIns={posts.map((post) => post.data.authorLinkedIn)}
+		authorLinkedIns={posts
+			.map((post) => post.data.authorLinkedIn)
+			.filter((linkedIn) => linkedIn !== undefined)}
 		authorUsernames={posts.map((post) => post.data.authorUsername)}
 	/>
 </Layout>
