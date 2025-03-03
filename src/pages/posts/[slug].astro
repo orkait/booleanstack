@@ -32,6 +32,33 @@ const { post } = Astro.props;
 			<div class="flex items-center justify-center gap-2 flex-wrap">
 				<DateTag date={post.data.date} />
 				{post.data.tags?.map((tag) => <Tag tag={tag} />)}
+
+				<div class="flex items-center bg-primary dark:bg-secondary dark:text-secondary-content rounded-md">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-tag text-white mx-1.5"
+						><path
+							d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"
+						></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg
+					>
+					<a
+						href={post.data.author ? `/author/${post.data.authorUsername}` : '#'}
+						class={`
+                        flex items-center gap-1
+                        pr-2.5 py-1 rounded-md text-xs text-neutral-content font-medium capitalize
+                    `}
+					>
+						{post.data.author}
+					</a>
+				</div>
 			</div>
 			<p class="text-lg text-center -700 max-w-[480px]">{post.data.description}</p>
 		</div>
@@ -73,5 +100,5 @@ const { post } = Astro.props;
 		annotationGroup(annotations).show();
 	}
 
-    document.addEventListener("astro:page-load", initAnnotations);
+	document.addEventListener("astro:page-load", initAnnotations);
 </script>
