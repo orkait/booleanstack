@@ -21,12 +21,7 @@ export const MENUS = [
         title: "Archive",
         link: "/date",
         target: "_self",
-    },
-    {
-        title: "GitHub",
-        link: "https://github.com/infinity-ooo/astro-theme-mia",
-        target: "_blank",
-    },
+    }
 ];
 
 export const FOOTER_CONTENT = "Made by Humans for Superhumans 🚀";

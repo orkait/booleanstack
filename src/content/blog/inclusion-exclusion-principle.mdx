@@ -5,6 +5,7 @@ date: "2024-06-01"
 tags: ["combinatorics", "competitive programming", "inclusion-exclusion"]
 cover: "https://i.imgur.com/tk26cxr.jpeg"
 author: "Kailas Mahavarkar"
+authorUsername: "kailas-mahavarkar"
 authorLinkedIn: "https://www.linkedin.com/in/kailasmahavarkar/"
 ---
 
@@ -57,7 +58,7 @@ We need to determine how many numbers in the range `[1, N]` are divisible by **e
 
 />
 
-### **Why Does This Work?**
+### Why Does This Work?
 
 <SingleImg shouldContain width="50%" src="https://i.imgur.com/XUwAeoo.png" />- **|A|** is counted
 once. - **|B|** is counted once. - **|A ∩ B|** is counted twice, so we subtract it once. - This
@@ -75,7 +76,18 @@ adjustment gives us the correct count.
 
 We can expand this principle for three sets:
 
-<MathBlock tex={`|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|`} />
+<CodeTabs
+	isTabHeaderVisible={false}
+	tabs={{
+		python: injectCode(`
+        3-way IEP |A ∪ B ∪ C| = 
+            +   (|A| + |B| + |C|)
+            -   (|A ∩ B| - |A ∩ C| - |B ∩ C|)
+            +   (|A ∩ B ∩ C|)
+        `),
+	}}
+/>
+
 
 If we apply the same logic, the pattern continues as we introduce more sets.
 
@@ -83,9 +95,7 @@ If we apply the same logic, the pattern continues as we introduce more sets.
 
 ## **IEP for Four-Way Venn Diagram**
 
-<SingleImg 
-class="bg-white"
-shouldContain src="https://i.imgur.com/ZPm6qJO.png" />
+<SingleImg class="bg-white" shouldContain src="https://i.imgur.com/ZPm6qJO.png" />
 
 Applying four-way Inclusion-Exclusion:
 
@@ -136,11 +146,10 @@ For a **five-way set union**, the formula expands further:
 />
 ---
 
-## Applying IEP in a Competitive Programming Problem:
+## Applying IEP in a Competitive Programming Problem (from codeforces):
 
 <Paper>
-	### **Problem Statement (A) Insomnia Cure** 
-    One dragon 🐉. Two dragons 🐉🐉. Three dragons
+	### **Problem Statement (A) Insomnia Cure** One dragon 🐉. Two dragons 🐉🐉. Three dragons
 	🐉🐉🐉... — the princess 👸 was counting. She had trouble falling asleep 😴, and she got bored
 	of counting lambs 🐑 when she was nine. However, just counting dragons was boring as well, so
 	she entertained herself as best she could. Tonight she imagined that all dragons were here to
@@ -186,7 +195,7 @@ N = 12
 - **Affected by k or l:** `{2, 3, 4, 6, 8, 9, 10, 12}`
 - **Affected by k or l:** `8`
 
-### **Implementation:** 
+### **Implementation:**
 
 <CodeTabs
     tabLabels={["Brute Force", "Optimized"]}
@@ -238,8 +247,8 @@ N = 12
 
                     return A1 - A2 + A3 - A4;
                 }
-            };    
-        `) 
+            };
+        `)
     }}
 
 />
