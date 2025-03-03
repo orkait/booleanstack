@@ -41,7 +41,7 @@ const VennDiagram3Way = ({
     return (
         <>
             <div className="space-y-6">
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-3 gap-4">
                     {[
                         { label: 'Set 1 Size', value: set1, setter: setSet1 },
                         { label: 'Set 2 Size', value: set2, setter: setSet2 },
@@ -59,7 +59,7 @@ const VennDiagram3Way = ({
                     ))}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4">
                     {[
                         { label: CONSTANTS.INT_12, value: int12, setter: setInt12 },
                         { label: CONSTANTS.INT_13, value: int13, setter: setInt13 },

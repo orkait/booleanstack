@@ -8,7 +8,7 @@ const IEPVisualization = () => {
     const [activeTab, setActiveTab] = useState('two-sets');
 
     return (
-        <div className="w-full rounded-lg shadow-lg">
+        <div className="w-full rounded-lg shadow-md">
             <div className="p-6">
                 {/* Tab Controls */}
                 <div className="join mb-6">

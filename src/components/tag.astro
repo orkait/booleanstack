@@ -1,15 +1,16 @@
 ---
 type Props = {
 	tag: string;
+	class?: string;
 };
 
-const { tag } = Astro.props;
+const { tag, class: className } = Astro.props;
 ---
 
 <a
 	href={`/tags/${encodeURI(tag)}`}
 	target="_self"
-	class="px-2.5 py-1 rounded-md text-xs bg-neutral text-neutral-content font-medium capitalize"
+	class={`px-2.5 py-1 rounded-md text-xs bg-neutral text-neutral-content font-medium capitalize ${className || ""}`}
 >
 	{tag}
 </a>
