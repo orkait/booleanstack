@@ -1,171 +1,83 @@
 ---
-import { type CollectionEntry } from "astro:content";
-import PostListItem from "./post-list-item.astro";
 import Avatar from "@src/helpers/avatar";
 
 type Props = {
-	posts: CollectionEntry<"blog">[];
-	authors: string;
-	authorUsernames: string;
-	authorLinkedIns?: string;
-	hasPagination?: boolean;
-	currentPage?: number;
-	totalPages?: number;
-	heading?: string;
+	authors: string[];
+	authorUsernames: string[];
+	authorLinkedIns?: string[];
 };
 
-const {
-	posts,
-	authors,
-	authorUsernames,
-	authorLinkedIns,
-	currentPage = 1,
-	totalPages = 1,
-	heading,
-} = Astro.props;
+const { authors, authorUsernames, authorLinkedIns = [] } = Astro.props;
 
-// Function to get visible page numbers with ellipsis
-function getVisiblePages(current: number, total: number) {
-	if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
-
-	if (current <= 3) return [1, 2, 3, "...", total];
-	if (current >= total - 2) return [1, "...", total - 2, total - 1, total];
-
-	return [1, "...", current, "...", total];
-}
-
-const visiblePages = getVisiblePages(currentPage, totalPages);
-const avatars = [] as any;
+const avatars = [] as any[];
 
 for (let i = 0; i < authors.length; i++) {
 	const avatarInstance = new Avatar({
 		seed: authors[i],
 	});
 
-	const avatar = avatarInstance.render();
+	const avatar = avatarInstance.render("w-12 h-12");
 	avatars.push(avatar);
 }
 ---
 
-<div>
-	<div class="prose max-w-screen-lg mx-auto px-4 my-4">
-		{heading && <h1>{heading}</h1>}
-		<ul class="list bg-base-100 rounded-box shadow-md">
-			<li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</li>
-
-			<li class="list-row">
-				<div>
-					<img
-						class="size-10 rounded-box"
-						src="https://img.daisyui.com/images/profile/demo/1@94.webp"
-					/>
-				</div>
-				<div>
-					<div>Dio Lupa</div>
-					<div class="text-xs uppercase font-semibold opacity-60">Remaining Reason</div>
-				</div>
-				<button class="btn btn-square btn-ghost">
-					<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						><g
-							stroke-linejoin="round"
-							stroke-linecap="round"
-							stroke-width="2"
-							fill="none"
-							stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g
-						></svg
-					>
-				</button>
-				<button class="btn btn-square btn-ghost">
-					<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						><g
-							stroke-linejoin="round"
-							stroke-linecap="round"
-							stroke-width="2"
-							fill="none"
-							stroke="currentColor"
-							><path
-								d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-							></path></g
-						></svg
-					>
-				</button>
-			</li>
-
-			<li class="list-row">
-				<div>
-					<img
-						class="size-10 rounded-box"
-						src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-					/>
-				</div>
-				<div>
-					<div>Ellie Beilish</div>
-					<div class="text-xs uppercase font-semibold opacity-60">Bears of a fever</div>
-				</div>
-				<button class="btn btn-square btn-ghost">
-					<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						><g
-							stroke-linejoin="round"
-							stroke-linecap="round"
-							stroke-width="2"
-							fill="none"
-							stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g
-						></svg
-					>
-				</button>
-				<button class="btn btn-square btn-ghost">
-					<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						><g
-							stroke-linejoin="round"
-							stroke-linecap="round"
-							stroke-width="2"
-							fill="none"
-							stroke="currentColor"
-							><path
-								d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-							></path></g
-						></svg
-					>
-				</button>
-			</li>
-
-			<li class="list-row">
-				<div>
-					<img
-						class="size-10 rounded-box"
-						src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-					/>
-				</div>
-				<div>
-					<div>Sabrino Gardener</div>
-					<div class="text-xs uppercase font-semibold opacity-60">Cappuccino</div>
-				</div>
-				<button class="btn btn-square btn-ghost">
-					<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						><g
-							stroke-linejoin="round"
-							stroke-linecap="round"
-							stroke-width="2"
-							fill="none"
-							stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g
-						></svg
-					>
-				</button>
-				<button class="btn btn-square btn-ghost">
-					<svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						><g
-							stroke-linejoin="round"
-							stroke-linecap="round"
-							stroke-width="2"
-							fill="none"
-							stroke="currentColor"
-							><path
-								d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-							></path></g
-						></svg
-					>
-				</button>
-			</li>
-		</ul>
+<div class="prose max-w-screen-lg mx-auto px-4 my-4">
+	<div class="overflow-x-auto">
+		<table class="table">
+			{/* head */}
+			<thead>
+				<tr>
+					<th>Author Name</th>
+					<th>Posts By Author</th>
+					<th>Author Social</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{
+					authors.map((author, index) => (
+						<tr>
+							<td>
+								<div class="flex items-center gap-3">
+									<div class="avatar">
+										<div class="mask mask-squircle h-12 w-12">
+											{/* Use the generated avatar */}
+											<div class="w-12 h-12" set:html={avatars[index]} />
+										</div>
+									</div>
+									<div>
+										<div class="font-bold">{author}</div>
+										<div class="text-sm opacity-50">Author</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								<a
+									class="btn btn-sm btn-primary"
+									href={`/author/${authorUsernames[index]}`}
+									class="link"
+								>
+									View Posts
+								</a>
+							</td>
+							<td>
+								{authorLinkedIns[index] === "" ? (
+									<span class="text-gray-500">Not available</span>
+								) : (
+									<a
+										class="btn btn-sm btn-secondary"
+										href={authorLinkedIns[index]}
+										target="_blank"
+										class="link"
+									>
+										Follow
+									</a>
+								)}
+							</td>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
 	</div>
 </div>

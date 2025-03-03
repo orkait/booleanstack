@@ -165,8 +165,8 @@ class Avatar {
      * Renders the avatar as an SVG string
      * @returns SVG markup as a string
      */
-    public render(): string {
-        let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${this.box} ${this.box}" width="${this.box}" height="${this.box}">`;
+    public render(className = ""): string {
+        let svg = `<svg xmlns="http://www.w3.org/2000/svg" class="${className}" viewBox="0 0 ${this.box} ${this.box}" width="${this.box}" height="${this.box}">`;
 
         // Background rectangle
         svg += `<rect width="${this.box}" height="${this.box}" fill="${this.bgColor}" />`;
