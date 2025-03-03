@@ -14,8 +14,11 @@ const blog = defineCollection({
           day: "numeric",
         }),
       ),
-    tags: z.array(z.string()).optional(),
-    cover: z.string().optional(),
+    tags: z.array(z.string()),
+    cover: z.string(),
+    author: z.string(),
+    authorUsername: z.string(),
+    authorLinkedIn: z.string().optional(),
   }),
 });
 

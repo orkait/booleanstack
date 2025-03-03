@@ -141,6 +141,8 @@ const { isTabHeaderVisible = true } = Astro.props;
 				});
 		}
 
+        const copyButton = document.getElementById("copyButton");
+        if (!copyButton) return;
 		document.getElementById("copyButton").addEventListener("click", copyToClipboard);
 	})();
 </script>
