@@ -17,6 +17,6 @@ export const tags = Array.from(
     ),
 ).sort();
 
-export const authors = Array.from(new Set(posts.map((post) => post.data.authorLinkedIn))).sort().filter(x => x !== undefined);
+export const authors = Array.from(new Set(posts.map((post) => post.data.authorUsername))).sort().filter(x => x !== undefined);
 
 export const years = Array.from(new Set(posts.map((post) => new Date(post.data.date).getFullYear().toString()))).sort();

@@ -14,7 +14,7 @@ export default defineConfig({
 	legacy: {
 		astroFlavoredMarkdown: true,
 	},
-	site: "https://astro-theme-mia.pages.dev",
+	site: "https://booleanstack.com",
 	trailingSlash: "never",
 	prefetch: {
 		prefetchAll: true,

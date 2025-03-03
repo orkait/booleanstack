@@ -1,6 +1,6 @@
 # Booleanstack
 
-[English](README.md) | [中文](README_zh.md) | [Demo](https://astro-theme-mia.pages.dev/)
+[English](README.md) | [Demo](https://booleanstack.com)
 
 Booleanstack is a simple and clean theme for Astro, Tailwindcss and MDX. It is designed to be a personal blog theme, with a focus on readability and mobile-first design, base design is taken from Mia theme of Astro.
 

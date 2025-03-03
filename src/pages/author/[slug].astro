@@ -40,8 +40,6 @@ type Props = {
 
 const { slug, posts } = Astro.props;
 const tagMap = posts.map((post) => post.data.tags).flat();
-
-console.log(slug);
 ---
 
 <Layout>

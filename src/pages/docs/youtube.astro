@@ -1,10 +1,15 @@
 ---
-import { YouTube } from "astro-lazy-youtube-embed";
+import { YouTube } from "astro-embed";
 import CodeTabs from "@components/code-tabs.astro";
 import { injectCode } from "@src/utils/blog-utils";
 ---
 
 <div class="max-w-container mx-auto px-4">
+	<YouTube
+		id="FfTT7mxGw8I"
+		params="start=19&end=22&autoplay=1"
+		title="Just Curious - Limmy's Homemade Show"
+	/>
 	<CodeTabs
 		tabs={{
 			html: injectCode(`
