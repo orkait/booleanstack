@@ -23,40 +23,44 @@ import { injectCode } from "@src/utils/blog-utils";
 		<CodeTabs
 			tabs={{
 				markdown: injectCode(`
-                ---
-                import CodeTabs from "@components/code-tabs.astro";
-                import { injectCode } from "@src/utils/blog-utils";
-                ---
-    
-                <CodeTabs
-                    tabs={{
-                        python: injectCode(\`
-                            from collections import Counter
-                            import heapq
-    
-                            def topKFrequent(nums, k): # Count frequencies
-                                count = Counter(nums)
-    
-                                # Keep k most frequent elements using min-heap
-                                heap = []
-                                for num, freq in count.items():
-                                    heapq.heappush(heap, (freq, num))
-                                    if len(heap) > k:
-                                        heapq.heappop(heap)
-    
-                                # Extract results
-                                return [num for freq, num in heap]
-                        \`),
-                    }}
-                />
-    
+                    from PIL import Image
+                        import random
+
+                        # Load the image
+                        input_path = "storage/cwk_banner.jpg"
+                        output_path = "glitched_image.png"
+                        image = Image.open(input_path)
+                        pixels = image.load()
+
+                        # Create a new image for output
+                        width, height = image.size
+                        output_image = Image.new("RGB", (width, height))
+                        output_pixels = output_image.load()
+
+
+                        def make_glitch_effect(delta=0):
+                            for y in range(height):
+                                delta_x = random.randint(-delta, delta)
+
+                                for x in range(width):
+                                    source_x = (x - delta_x) % width
+                                    output_pixels[x, y] = pixels[source_x, y]
+
+
+                        if __name__ == "__main__":
+                            # This effect is inspired by newboston youtube banner
+
+                            make_glitch_effect(10)
+                            output_image.save(output_path)
+                            output_image.show()
+
             `),
 			}}
 		/>
 
 		<CodeTabs
 			tabs={{
-				python: injectCode(`
+				'cpp': injectCode(`
                     from collections import Counter
                     import heapq
 
