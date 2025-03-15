@@ -1,0 +1,224 @@
+---
+title: "Binary search"
+description: "In computer science, binary search, also known as half-interval search,logarithmic search,or binary chop,is a search algorithm that finds the position of a target value within a sorted array."
+date: "2024-06-01"
+tags: ["combinatorics", "competitive programming", "inclusion-exclusion"]
+cover: "https://i.imgur.com/HaSTcZD.gif"
+
+author: "Kailas Mahavarkar"
+authorUsername: "kailas-mahavarkar"
+authorLinkedIn: "https://www.linkedin.com/in/kailasmahavarkar/"
+---
+
+import { injectCode } from "@src/utils/blog-utils";
+
+
+# Binary Search Algorithm – Iterative and Recursive Implementation
+The **Binary Search Algorithm** is a way to find a specific item in a sorted list quickly. Instead of checking each item one by one, it works by repeatedly cutting the list in half. If the item you're looking for is in the first half, it ignores the second half, and vice versa. This process keeps narrowing down the search until the item is found. Because it halves the list each time, it’s very efficient and works in **O(log N) time**, which is much faster than checking every item.
+
+
+---
+
+## What is Binary Search Algorithm?
+Binary search is an efficient method for finding a specific value in a **sorted list**. Instead of scanning each element one by one, it speeds up the process by repeatedly **cutting the search space in half**. The search begins by identifying the middle element of the list. If this middle element matches the target value, the search is complete. However, if the target is smaller than the middle element, the search continues in the left half of the list. Conversely, if the target is larger, the search shifts to the right half. This process repeats until the target is found or the search space becomes empty. By reducing the number of elements to check at each step, binary search is significantly faster than a linear search, making it ideal for large datasets
+
+
+
+
+The Binary Search Algorithm is a quick way to find a number in a sorted list by repeatedly cutting the search space in half.
+### Here's how it works step by step:
+1.	Find the middle element of the list.
+2.	Compare it with the number you're searching for (the key).
+3.	If it matches, you've found the number! 
+4.	If the key is smaller than the middle element, search only the left half of the list.
+5.	If the key is larger, search only the right half.
+6.	Keep repeating this process until you find the number or run out of elements to check.
+Since the search space gets smaller with each step, Binary Search is much faster than checking every number one by one! 
+
+
+---
+
+## Binary Search Algorithm (Iterative Approach)
+Given a sorted array A of n elements and a target value T, the binary search algorithm finds the index of T in A using the following steps:
+
+### 1.Initialize the search range: 
+
+Set L (left boundary) to 0.
+Set R (right boundary) to n - 1.
+### Check if the search range is valid:
+
+If L > R, the search terminates as unsuccessful (target not found).
+### Find the middle element:
+
+Compute m = floor((L + R) / 2), which gives the index of the middle element.
+### Compare the middle element with the target:
+
+If A[m] < T, the target must be in the right half.
+Set L = m + 1 and repeat from step 2.
+If A[m] > T, the target must be in the left half.
+Set R = m - 1 and repeat from step 2.
+Check if the target is found:
+
+If A[m] == T, return m (index of the target).
+If the loop ends without finding the target, return unsuccessful.
+
+
+
+
+### **Implementation:**
+
+<CodeTabs
+    tabLabels={["Java", "C++","Python"]}
+    tabs={{
+        'java': injectCode(`
+        
+          public class BinarySearch {
+    // Method to perform binary search
+    public static int binarySearch(int[] array, int target) {
+        int start = 0;
+        int end = array.length - 1;
+
+        // Repeat until the search space is exhausted
+        while (start <= end) {
+            int middle = start + (end - start) / 2; // Prevent overflow
+
+            // If middle element is the target, return its index
+            if (array[middle] == target) {
+                return middle;
+            }
+            // If target is smaller, search in the left half
+            else if (array[middle] > target) {
+                end = middle - 1;
+            }
+            // If target is larger, search in the right half
+            else {
+                start = middle + 1;
+            }
+        }
+
+        return -1; // Target not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50};
+        int target = 30;
+        System.out.println("Index of " + target + ": " + binarySearch(arr, target));
+    }
+}
+
+        `),
+        "cpp": injectCode(`
+           #include <iostream>
+using namespace std;
+
+// Function to perform binary search
+int binarySearch(int array[], int size, int target) {
+    int start = 0, end = size - 1;
+
+    // Repeat until the search space is exhausted
+    while (start <= end) {
+        int middle = start + (end - start) / 2; // Prevent overflow
+
+        // If middle element is the target, return its index
+        if (array[middle] == target) {
+            return middle;
+        }
+        // If target is smaller, search in the left half
+        else if (array[middle] > target) {
+            end = middle - 1;
+        }
+        // If target is larger, search in the right half
+        else {
+            start = middle + 1;
+        }
+    }
+
+    return -1; // Target not found
+}
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int target = 30;
+    
+    cout << "Index of " << target << ": " << binarySearch(arr, size, target) << endl;
+    return 0;
+}
+
+        `),
+         'cpp': injectCode(`
+        
+         using System;
+
+class BinarySearch {
+    // Method to perform binary search
+    public static int binarySearch(int[] array, int target) {
+        int start = 0;
+        int end = array.Length - 1;
+
+        // Repeat until the search space is exhausted
+        while (start <= end) {
+            int middle = start + (end - start) / 2; // Prevent overflow
+
+            // If middle element is the target, return its index
+            if (array[middle] == target) {
+                return middle;
+            }
+            // If target is smaller, search in the left half
+            else if (array[middle] > target) {
+                end = middle - 1;
+            }
+            // If target is larger, search in the right half
+            else {
+                start = middle + 1;
+            }
+        }
+
+        return -1; // Target not found
+    }
+
+    static void Main() {
+        int[] arr = {10, 20, 30, 40, 50};
+        int target = 30;
+        Console.WriteLine("Index of " + target + ": " + binarySearch(arr, target));
+    }
+}
+
+        `),
+        'cpp-Python': injectCode(`
+          # Function to perform binary search
+def binary_search(array, target):
+    start, end = 0, len(array) - 1
+
+    # Repeat until the search space is exhausted
+    while start <= end:
+        middle = start + (end - start) // 2  # Prevent overflow
+
+        # If middle element is the target, return its index
+        if array[middle] == target:
+            return middle
+        # If target is smaller, search in the left half
+        elif array[middle] > target:
+            end = middle - 1
+        # If target is larger, search in the right half
+        else:
+            start = middle + 1
+
+    return -1  # Target not found
+
+# Example usage
+arr = [10, 20, 30, 40, 50]
+target = 30
+print(f"Index of {target}: {binary_search(arr, target)}")
+
+        `),
+    }}
+/>
+## Explanation of the Algorithm (for all languages):
+Initialize start and end to mark the search range.
+Step 1:Find the middle element using middle = start + (end - start) / 2.
+Step 2:Compare the middle element with the target value:
+If it matches, return the index.
+If the target is smaller, search in the left half (end = middle - 1).
+If the target is larger, search in the right half (start = middle + 1).
+Step 3:Repeat the process until the target is found or start > end, meaning the target is not in the array.
