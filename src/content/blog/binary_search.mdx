@@ -69,23 +69,23 @@ Given a sorted array `A` of n elements and a target value `T`, the binary search
 
 ### 1.Initialize the search range: 
 
-Set `L` (left boundary) to `0`.
-Set `R` (right boundary) to `n - 1`.
+Set `S` (left boundary or starting element ) to `0`.
+Set `E` (right boundary or ending or last element) to `n - 1`.
 
 ### Check if the search range is valid:
 
-If `L > R`, the search terminates as `unsuccessful` (target not found).
+If `S > E`, the search terminates as `unsuccessful` (target not found).
 
 ### Find the middle element:
 
-Compute `m = floor((L + R) / 2)`, which gives the index of the middle element.
+Compute `m = floor((S + E) / 2)`, which gives the index of the middle element.
 
 ### Compare the middle element with the target:
 
 If `A[m] < T`, the target must be in the right half.
-Set `L = m + 1` and repeat from step 2.
+Set `S = m + 1` and repeat from step 2.
 If `A[m] > T`, the target must be in the left half.
-Set `R = m - 1` and repeat from step 2.
+Set `E = m - 1` and repeat from step 2.
 
 Check if the target is found:
 
