@@ -10,6 +10,7 @@ interface Props {
 const { post } = Astro.props;
 
 const coverImageUrl = post.data.cover ? `${post.data.cover}?w=800&q=80` : "/default-cover.jpg";
+
 ---
 
 <article

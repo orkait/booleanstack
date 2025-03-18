@@ -2,11 +2,10 @@
 import "katex/dist/katex.min.css";
 import "@styles/global.css";
 import "@styles/blog.css";
-import { GOOGLE_GTAG } from "@src/config";
 import { ViewTransitions } from "astro:transitions";
 import { prngXorShift } from "@utils/prng";
 import { GET_ENDPOINT } from "@env";
-import { file } from "astro/loaders";
+// import { GOOGLE_GTAG } from "@src/config";
 
 export interface Props {
 	title: string;
@@ -36,8 +35,8 @@ const ENDPOINT = GET_ENDPOINT(import.meta.env.PROD ? "PROD" : ("DEV" as any));
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Google tag (gtag.js) -->
-<script async is:inline src=`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_GTAG}`></script>
-<script>
+<!-- <script async is:inline src=`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_GTAG}`></script> -->
+<!-- <script>
 	import { GOOGLE_GTAG } from "@src/config";
 
 	// @ts-ignore
@@ -50,6 +49,25 @@ const ENDPOINT = GET_ENDPOINT(import.meta.env.PROD ? "PROD" : ("DEV" as any));
 	gtag("js", new Date());
 	// @ts-ignore
 	gtag("config", GOOGLE_GTAG);
+</script> -->
+
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"url": "https://booleanstack.com",
+		"name": "BooleanStack",
+		"description": "BooleanStack is your go-to platform for mastering data structures, algorithms, system design, and enhancing your software engineering skills. We offer the most frequently asked coding interview questions completely free of cost. 🚀",
+		"image": "https://booleanstack.com/assets/og-image.jpg",
+		"publisher": {
+			"@type": "Organization",
+			"name": "BooleanStack",
+			"logo": {
+				"@type": "ImageObject",
+				"url": "https://booleanstack.com/logo.png"
+			}
+		}
+	}
 </script>
 
 <!-- Primary Meta Tags -->
@@ -62,13 +80,16 @@ const ENDPOINT = GET_ENDPOINT(import.meta.env.PROD ? "PROD" : ("DEV" as any));
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image" content={`${ENDPOINT}/og/${fileHash}.jpg`} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-
-<meta property="og:image" content={`${ENDPOINT}/og/${fileHash}.jpg`} />
+<meta property="twitter:image" content={`${ENDPOINT}/og/${fileHash}.jpg`} />
+<meta property="twitter:image:alt" content="BooleanStack - Free Software Engineering Blogs" />
 
 <ViewTransitions />
