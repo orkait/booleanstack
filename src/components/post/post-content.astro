@@ -33,6 +33,8 @@ import DataTable from "@mdx/data-table.astro";
 import MathBlock from "@mdx/math-block.astro";
 import CodeTabs from "../code-tabs.astro";
 import Paper from "../mdx/paper.astro";
+import Youtube from "../blogbase/youtube-embed.astro";
+import { injectCode } from "@src/utils/blog-utils";
 
 type Props = {
 	post: CollectionEntry<"blog">;
@@ -74,8 +76,10 @@ const { Content } = await post.render();
 		N: Notation,
 		SingleImg,
 		DataTable,
-        MathBlock,
-        CodeTabs,
-        Paper
+		MathBlock,
+		CodeTabs,
+		Youtube,
+		Paper,
+		injectCode,
 	}}
 />
