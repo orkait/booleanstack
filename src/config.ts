@@ -1,10 +1,8 @@
 export const SITE_FAVICON = "/favicon.png";
 export const SITE_LOGO = "/logo.svg";
 export const SITE_TITLE = "BooleanStack";
-export const SITE_DESCRIPTION = `
-  Mia is designed to be minimalist yet powerful, integrating the capabilities of Astro, MDX, 
-  and Rough Notation. Whether you're a developer, writer, 
-  or just someone who loves clean and efficient design, this theme is perfect for you.`;
+export const SITE_DESCRIPTION = `BooleanStack is your go-to platform for mastering data structures, algorithms, system design, and enhancing your software engineering skills. We offer the most frequently asked coding interview questions completely free of cost. 🚀`;
+
 
 export const MENUS = [
     {
@@ -26,4 +24,4 @@ export const MENUS = [
 
 export const FOOTER_CONTENT = "Made by Humans for Superhumans 🚀";
 
-export const GOOGLE_GTAG = "G-XXXXXXXXXX";
+// export const GOOGLE_GTAG = "GTM-MJVWMQXT";
