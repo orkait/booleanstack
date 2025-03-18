@@ -7,7 +7,11 @@
 		"dev": "astro dev --mode dev",
 		"build": "astro check && astro build --mode prod",
 		"preview": "astro preview",
-		"check": "astro check"
+		"check": "astro check",
+		"opengraph": "python ./opengraph/opengraph_generator.py",
+		"release-development": "npm run build && npm run opengraph",
+		"release-staging": "npm run build && astro deploy --env staging",
+		"release-production": "npm run build && astro deploy --env production"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.7.0",
