@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import Codebox from "./Codebox.tsx";
+import { ENV } from '@env';
 
 interface PythonExecutionResult {
     success: boolean;
@@ -86,7 +87,7 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
         setIsRunning(true);
         setOutput("Executing code...");
 
-        fetch("http://127.0.0.1:8787/execute", {
+        fetch(ENV.PYTHON_CODE_RUNNER_ENDPOINT, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
