@@ -1,0 +1,9 @@
+---
+import PythonCodeBlock from "@src/components/codebox/PythonCodebox";
+import Layout from "@src/components/layout.astro";
+---
+
+
+<Layout showFooter={false}>
+	<PythonCodeBlock client:only="react" />
+</Layout>

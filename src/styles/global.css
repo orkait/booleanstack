@@ -1,9 +1,13 @@
 html,
 body {
-	width: 100vw;
-	height: 100vh;
 	content-visibility: auto;
 	-webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+	width: 100% !important;
+	height: 100% !important;
 }
 
 * {
@@ -60,6 +64,23 @@ svg.rough-annotation {
 	@apply bg-primary text-primary-content;
 }
 
+.cm-editor.cm-focused {
+	outline: none !important;
+}
+
+.cm-editor {
+	background-color: transparent !important;
+}
+
+.cm-gutters {
+	background-color: transparent !important;
+}
+
+code {
+	font-weight: normal;
+	@apply bg-violet-100 rounded-md w-full;
+}
+
 #themeToggle {
 	width: 30px;
 	height: 30px;
@@ -92,4 +113,12 @@ svg.rough-annotation {
 .footer {
 	row-gap: 0.5rem;
 	padding-bottom: 50px;
+}
+
+.test {
+	border: 1px solid red;
+}
+
+.test2 {
+	border: 1px solid cyan;
 }

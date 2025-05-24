@@ -9,27 +9,28 @@ import ThemeProvider from "./theme-provider.astro";
 type Props = {
 	title?: string;
 	description?: string;
+    showFooter?: boolean;
 };
 
-const { title, description } = Astro.props;
+const { title, description, showFooter = true } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
 	<head>
 		<Meta
 			title={title ? `${title} · ${SITE_TITLE}` : SITE_TITLE}
 			description={description ?? SITE_DESCRIPTION}
 		/>
 	</head>
-	<body>
-		<div class="flex flex-col h-full mb-8 overflow-y-scroll antialiased">
+	<body class="flex flex-col h-full w-full">
+		<div class="flex flex-col h-full w-full mb-8 overflow-y-scroll antialiased">
 			<ThemeProvider />
 			<Header />
-			<div class="flex-auto prose max-w-none">
+			<div class="flex w-full h-full prose max-w-none">
 				<slot />
 			</div>
-			<Footer />
+			{showFooter && <Footer />}
 		</div>
 	</body>
 </html>
