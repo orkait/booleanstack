@@ -15,7 +15,6 @@
 		}
 
 		localStorage.setItem("theme", newTheme);
-
 		const body = document.body;
 
 		// If the current theme matches the new theme, no need to update
@@ -24,6 +23,13 @@
 		}
 
 		body.setAttribute("data-theme", newTheme);
+
+		// Dispatch theme change event
+		window.dispatchEvent(
+			new CustomEvent("theme-change", {
+				detail: { theme: newTheme },
+			})
+		);
 	}
 
 	// Initial Setup

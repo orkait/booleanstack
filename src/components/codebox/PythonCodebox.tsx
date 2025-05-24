@@ -1,13 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Codebox from "./Codebox.tsx";
 import { ENV } from '@env';
-
-interface PythonExecutionResult {
-    success: boolean;
-    output?: string;
-    error?: string;
-    variables?: Record<string, any>;
-}
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import ResizeIcon from '@src/icons/ResizeIcon.tsx';
+import { githubDark, githubLight } from "@uiw/codemirror-theme-github";
 
 interface PythonCodeBlockProps {
     initialCode?: string;
@@ -17,8 +13,8 @@ interface PythonCodeBlockProps {
 }
 
 const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
-    initialCode = "",
-    className = "",
+    initialCode = "print([x for x in range(10)])",
+    className = "h-full",
     showLineNumbers = true,
     readOnly = false
 }) => {
@@ -27,6 +23,29 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [showError, setShowError] = useState<boolean>(false);
+    const [variables, setVariables] = useState<Record<string, any>>({});
+    const [leftWidth, setLeftWidth] = useState<number>(60); // Percentage
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [editorTheme, setEditorTheme] = useState<string>("dark");
+    const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('light');
+
+    useEffect(() => {
+        // Initial theme setup
+        const initialTheme = document.body.getAttribute('data-theme') as 'light' | 'dark' || 'light';
+        setCurrentTheme(initialTheme);
+
+        // Listen for theme changes
+        const handleThemeChange = (e: CustomEvent) => {
+            setCurrentTheme(e.detail.theme);
+        };
+
+        window.addEventListener('theme-change', handleThemeChange as EventListener);
+
+        return () => {
+            window.removeEventListener('theme-change', handleThemeChange as EventListener);
+        };
+    }, []);
 
     const cleanCode = useCallback((str: string = ""): string => {
         if (!str || str.trim().length === 0) return "";
@@ -62,7 +81,7 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
         }
 
         return cleanedLines.join("\n");
-    }, []); 
+    }, []);
 
     const displayError = useCallback((message: string) => {
         setError(message);
@@ -96,12 +115,11 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
         })
             .then(response => response.json())
             .then(result => {
-                const output = result.output || "Code executed successfully (no output)";
-                let displayOutput = output;
+                setOutput(result.output || "Code executed successfully (no output)");
+
                 if (result.variables && Object.keys(result.variables).length > 0) {
-                    displayOutput += "\n\nVariables:\n" + JSON.stringify(result.variables, null, 2);
+                    setVariables(result.variables);
                 }
-                setOutput(displayOutput);
             })
             .catch(err => {
                 console.warn("Fetch error:", err.message);
@@ -118,41 +136,123 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
         }
     }, [runCode]);
 
+    const handleMouseDown = useCallback((e: React.MouseEvent) => {
+        e.preventDefault();
+        setIsDragging(true);
+    }, []);
+
+    const handleMouseMove = useCallback((e: MouseEvent) => {
+        if (!isDragging || !containerRef.current) return;
+
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+
+        // Constrain between 30% and 80%
+        const constrainedWidth = Math.min(Math.max(newLeftWidth, 30), 80);
+        setLeftWidth(constrainedWidth);
+    }, [isDragging]);
+
+    const handleMouseUp = useCallback(() => {
+        setIsDragging(false);
+    }, []);
+
+    useEffect(() => {
+        if (isDragging) {
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+        } else {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        }
+
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        };
+    }, [isDragging, handleMouseMove, handleMouseUp]);
+
     return (
-        <div className={`flex gap-4 ${className} mx-10 my-4`}>
-            <div className="min-w-[900px] max-w-[1200px] w-full mx-auto flex flex-col gap-2">
-                <label className="text-lg font-semibold">Python Code:</label>
-
-                <div onKeyDown={handleKeyDown}>
-                    <Codebox
-                        data={code}
-                        textChangeHandler={handleCodeChange}
-                        readOnly={readOnly}
-                        className="rounded-md"
-                        codeMode={true}
-                        language="python"
-                        basicSetup={{
-                            lineNumbers: showLineNumbers,
-                        }}
-                    />
-                </div>
-
-                <button
-                    onClick={runCode}
-                    disabled={isRunning}
-                    className="btn btn-primary"
-                >
-                    {isRunning ? "Running..." : "Run Code"}
-                </button>
-            </div>
-
-            <div className="w-[600px] mx-auto flex flex-col gap-2">
-                <label className="text-lg font-semibold">Output:</label>
-                <div className="w-full h-[400px] p-4 border border-base-300 rounded-lg bg-base-200 font-mono text-sm whitespace-pre-wrap overflow-auto">
-                    {showError ? error : output}
-                </div>
-            </div>
-        </div>
+        <PanelGroup direction="horizontal" className='mx-5  h-full min-h-full '>
+            <Panel defaultSize={70} minSize={0} className='h-full min-h-full'>
+                <Codebox
+                    style={{
+                        height: '100%',
+                        width: '100%'
+                    }}
+                    data={code}
+                    textChangeHandler={handleCodeChange}
+                    readOnly={readOnly}
+                    className="rounded-md mt-0 bg-red-500"
+                    codeMode={true}
+                    language="python"
+                    basicSetup={{
+                        lineNumbers: showLineNumbers,
+                    }}
+                    theme={currentTheme === 'dark' ? githubDark : githubLight}
+                />
+            </Panel>
+            <PanelResizeHandle
+                className='flex items-center justify-center opacity-50'
+            >
+                <ResizeIcon
+                    type="drag"
+                    data-direction="vertical"
+                    width={20}
+                    height={20}
+                />
+            </PanelResizeHandle>
+            <Panel defaultSize={30} minSize={0}>
+                <PanelGroup direction="vertical">
+                    <Panel>
+                        <div className="flex flex-col flex-1 h-full relative">
+                            <label className="text-lg font-semibold">Output:</label>
+                            <div className="flex-1 overflow-auto border-white border-[1px] p-4 rounded-lg bg-base-200 font-mono text-sm whitespace-pre-wrap">
+                                <div className="flex flex-col gap-2">
+                                    {showError ? error : output}
+                                </div>
+                            </div>
+                            <div className='absolute right-0 top-0'>
+                                <button
+                                    onClick={runCode}
+                                    disabled={isRunning}
+                                    className="btn btn-secondary btn-xs mr-2"
+                                >
+                                    {isRunning ? "Running..." : "Run Code"}
+                                </button>
+                            </div>
+                        </div>
+                    </Panel>
+                    <PanelResizeHandle
+                        className='flex m-auto my-1'
+                    >
+                        <ResizeIcon
+                            type="drag"
+                            data-direction="vertical"
+                            width={20}
+                            height={20}
+                        />
+                    </PanelResizeHandle>
+                    <Panel>
+                        <div className="flex flex-col h-full mt-0">
+                            <label className="text-lg font-semibold">Variables:</label>
+                            <div className="flex-1 overflow-auto border-white border-[1px] p-4 rounded-lg bg-base-200 font-mono text-sm whitespace-pre-wrap">
+                                <div className="flex flex-col gap-2">
+                                    {Object.entries(variables).map(([key, value]) => (
+                                        <div key={key}>{key}: {value}</div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </Panel>
+                </PanelGroup>
+            </Panel>
+        </PanelGroup>
     );
 };
 
