@@ -1,9 +1,9 @@
-import CodeMirrorComponent from "@uiw/react-codemirror";
-import type { BasicSetupOptions } from "@uiw/react-codemirror"
+import CodeMirrorComponent, { oneDark, oneDarkTheme } from "@uiw/react-codemirror";
+import type { BasicSetupOptions, Extension, ReactCodeMirrorProps } from "@uiw/react-codemirror"
 import { EditorView } from "@codemirror/view";
 import { python } from "@codemirror/lang-python";
-
-import React from "react";
+import React, { useEffect, useState } from "react";
+import type { EditorThemeType } from "@src/types/type";
 
 export const LangList = {
     javascript: "javascript",
@@ -22,10 +22,6 @@ export const LangList = {
 export type LangListType = keyof typeof LangList;
 
 
-declare type Extension = {
-    extension: Extension;
-} | readonly Extension[];
-
 type codeMirrorProps = {
     data: string;
     readOnly?: boolean;
@@ -37,20 +33,23 @@ type codeMirrorProps = {
     otherProps?: any,
     codeMode?: boolean,
     hasRoundedBorder?: boolean,
+    theme?: EditorThemeType,
+    style?: React.CSSProperties
 }
 
 const classes = {
-    codemirror: `shadow text-[16px] bg-transparent border-[1px] p-3 rounded-b-md rounded-tr-md min-h-[calc(100vh_-_200px)]`
+    codemirror: `bg-transparent border-[1px] p-1`
 }
 
 const Codebox: React.FC<codeMirrorProps> = (props) => {
-    const { data, readOnly, textChangeHandler, className, language, basicSetup, codeMode, otherProps } = props;
+    const { data, readOnly, textChangeHandler, className, language, basicSetup, codeMode, otherProps, theme, style } = props;
 
     return (
         <CodeMirrorComponent
             className={`${classes.codemirror} ${className}`}
             style={{
                 outline: "none",
+                ...style
             }}
             basicSetup={{
                 lineNumbers: true,
@@ -69,11 +68,15 @@ const Codebox: React.FC<codeMirrorProps> = (props) => {
             suppressHydrationWarning={true}
             autoFocus={true}
             extensions={[EditorView.lineWrapping, python()]}
-            minHeight="calc(100vh - 200px)"
+            height="100%"
             value={data}
-            theme={"dark"}
+            theme={theme}
             onChange={(value: any) => {
                 textChangeHandler(value);
+            }}
+            onFocus={() => {
+                // window lock scroll
+                document.body.style.overflow = "hidden";
             }}
             {...otherProps}
         />

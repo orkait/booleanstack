@@ -34,6 +34,13 @@
 
 			document.body.setAttribute("data-theme", newTheme);
 			localStorage.setItem("theme", newTheme);
+            
+			// Dispatch theme change event
+			window.dispatchEvent(
+				new CustomEvent("theme-change", {
+					detail: { theme: newTheme },
+				})
+			);
 		};
 
 		document.getElementById("theme-toggle")?.addEventListener("click", handleToggleClick);
