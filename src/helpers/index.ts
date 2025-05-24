@@ -15,7 +15,7 @@ export const tags = Array.from(
             })
             .flat(),
     ),
-).sort();
+).sort() as string[];
 
 export const authors = Array.from(new Set(posts.map((post) => post.data.authorUsername))).sort().filter(x => x !== undefined);
 

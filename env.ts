@@ -1,5 +1,6 @@
 export const ENV = {
-    MODE: 'dev',
+    MODE: import.meta.env.MODE,
+    PYTHON_CODE_RUNNER_ENDPOINT: import.meta.env.PUBLIC_PYTHON_CODE_RUNNER_ENDPOINT
 }
 
 export const ENDPOINT_MAPPING = {
