@@ -178,7 +178,7 @@ const PythonCodeBlock: React.FC<PythonCodeBlockProps> = ({
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
     return (
-        <PanelGroup direction="horizontal" className='mx-5  h-full min-h-full '>
+        <PanelGroup direction="horizontal" className='min-h-fit'>
             <Panel defaultSize={70} minSize={0} className='h-full min-h-full'>
                 <Codebox
                     style={{
